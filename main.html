@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/3dbdf65c77.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Task Reminder</title>
+</head>
+<body>
+    <div class="container">
+      
+        <main>
+            <section class="input">
+                <input class="input-field" type="text" placeholder="&#xf036; Add a new task" />
+              
+            </section>
+            <section class="list">
+                <div class ="head">
+                    <div class="tab">
+                    <input type="radio" name="task-tab" id="tab-all" checked>
+  <label for="tab-all">All</label>
+</div>
+<div class="tab">
+  <input type="radio" name="task-tab" id="tab-pending">
+  <label for="tab-pending">Pending</label>
+</div>
+  <div class="tab">
+  <input type="radio" name="task-tab" id="tab-completed">
+  <label for="tab-completed">Completed</label></div>
+                        <button class="tab delete" >Clear All</button>
+                     
+                </div>
+                
+                   
+                <div class ="items">
+                    <ul class="fa-ul">
+                        <li >
+                            <section class ="item">
+                            <span class="fa-li"><i class="fas fa-grip-vertical"></i></span>
+                  
+                       
+                        <input type="checkbox" id="item1" class="item-check" >
+                        <label for="item1" class="item-label">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout </label>
+                        <div class="menu-container">
+                        <button class="icon-button menu-button">
+                            <i class="fas fa-ellipsis-h"></i> 
+                        </button>
+                        <ul class="menu">
+                            <li><i class="	fa fa-check"></i> <button class="inside">Complete</button></li>
+                            <li><i class="	fas fa-trash"></i> <button class="inside">Delete</button></li>
+                        </ul>
+                        </div>
+                    </section>
+                </li>
+                </ul>
+                </div>
+                
+             
+            </section>
+        </main>
+    </div>
+</body>
+</html>
+
