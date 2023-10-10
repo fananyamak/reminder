@@ -11,21 +11,26 @@
     <div class="container">
       
         <main>
-            <section class="input">
-                <input class="input-field" type="text" placeholder="&#xf036; Add a new task" />
-              
-            </section>
+            
+                <div class="input-placeholder">
+                    <input type="text" class="input-text" required>
+                    <div class="placeholder">
+                        <span>&#xf550;</span>&nbsp; Add a new task
+                    </div>
+                </div>
+               
+           
             <section class="list">
                 <div class ="head">
-                    <div class="tab">
+                    <div class="tab tex">
                     <input type="radio" name="task-tab" id="tab-all" checked>
   <label for="tab-all">All</label>
 </div>
-<div class="tab">
+<div class="tab tex">
   <input type="radio" name="task-tab" id="tab-pending">
   <label for="tab-pending">Pending</label>
 </div>
-  <div class="tab">
+  <div class="tab tex">
   <input type="radio" name="task-tab" id="tab-completed">
   <label for="tab-completed">Completed</label></div>
                         <button class="tab delete" >Clear All</button>

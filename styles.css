@@ -16,14 +16,26 @@
 
 
 /* Style the task input section */
-.input {
-    display: flex;
-    gap: 10px;
+.input-placeholder {
+  display: flex;
+  gap:0px;
+  align-items: center;
+    width: 95%;
+    position: relative;
+    
+    margin:5%;
+    margin-bottom: 2%;
+    
+}
+.input-text{
+  width: 100%;
 }
 
-.input input {
-    flex-grow: 1;
-    padding: 10px;
+
+.input-placeholder input {
+  width: 97%;
+    padding: 3%;
+    height:40px;
 }
 
 input[type="radio"] {
@@ -32,14 +44,57 @@ input[type="radio"] {
 input[type="radio"]:checked + label {
  
   color:#007bff;
-  text-decoration: underline;
+  
+ 
+ 
+ 
+  
 }
+.tab:has(input[type="radio"]:checked)  {
+ 
+ 
+  border-bottom: 2px solid #007bff;
+ 
+ 
+ 
+  
+}
+
+
 
 .tab-content {
   display: none;
 }
 .tab{
-  margin: 10px;
+  padding: 3%;
+  padding-bottom: 1%;
+  margin :0%;
+  
+
+  
+ 
+  
+}
+
+.tex{
+  display: flex;
+  align-items: center;
+}
+.delete{
+  margin-top: 5px;;
+  margin-right: 5px;;
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  border-radius: 6px;
+  margin-inline-start: auto;
+  background: linear-gradient(90deg, #007bff 60%, #0056b3);
+}
+
+.list{
+  font-family: Arial, sans-serif;
+  font-size: 20px;
 }
 
 input[type="radio"]:checked ~ .tab-content {
@@ -54,18 +109,16 @@ input[type="radio"]:checked ~ .tab-content {
 }
 
 .head {
-  margin-top:20px;
+  
   display :flex;
     overflow: hidden;
-   
+   margin-left: 2%;
     padding: 10px;
    
-    background-color: #f1f1f1;
+    background-color: inherit;
+    border-bottom: 2px solid #ccc; ;
   }
-  .tab:nth-child(4) {
-    margin-inline-start: auto;
-    background: linear-gradient(90deg, #007bff 60%, #0056b3);
-  }
+ 
   /* Style the buttons that are used to open the tab content */
   .head button {
     background-color: inherit;
@@ -73,8 +126,10 @@ input[type="radio"]:checked ~ .tab-content {
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
+    padding: 8px 12px;
     transition: 0.3s;
+    height: min-content;
+    width:fit-content;
   }
   
   /* Change background color of buttons on hover */
@@ -99,15 +154,25 @@ input[type="radio"]:checked ~ .tab-content {
     display :flex;
     align-items: flex-start; 
     gap: 10px; 
-    border-top: 2px solid #ccc; 
+   
     border-bottom: 2px solid #ccc;  
-    padding: 20px; 
+    padding-top: 5%; 
+    padding-bottom: 5%; 
+    padding-right: 20px;
   }
+  
   .item-check {
     display: flex;
-    
+    align-items: center; 
     gap: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    width:20px;
+   
+      transform: scale(1.2); 
+     margin-left:5px;
+    
+    
 }
 .custom-list{
   list-style: none;
@@ -125,28 +190,44 @@ border:none;
   display: flex;
   flex-direction: column; 
   align-items: flex-start; 
+  width: 60px;
+  margin-top: 5px;
 }
   .menu {
-    width:100px;
+    width:115px;
+    height:65px;
     list-style: none;
     padding: 0;
     display: none;
     position: absolute; 
-    top: 100%; 
-    left: 0;
+    top: -20%; 
+    left: 70%;
     background-color: #fff;
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
+    box-shadow:  0px 5px 10px rgba(0, 0, 0, 0.3) ,
+    0px -5px 10px rgba(0, 0, 0, 0.3) ;
+    border-radius: 10px;
 }
 .menu a{
-  font-size: smaller;
+  font-size: 15px;
+}
+.fa-ul li:first-child{
+  border-bottom: 1px solid gray;
 }
 
 .menu-button:focus + .menu {
-  display: block;
+  display: flex;
+  flex-direction: column;
+ place-content: center;
 }
 .menu li {
-  margin-bottom: 10px;
+ 
+  display: flex;
+ 
+}
+.menu li i {
+  margin: 5px;
+  transform: scale(.65); 
+ 
 }
 .menu li a {
   text-decoration: none;
@@ -168,12 +249,63 @@ border:none;
     flex-grow: 1;
 }
 .input-field{
-  border-radius: 5px;
+  border-radius: 6px;
+  border: 1px solid #8e8e8e;
+
+ 
+
 }
+
+.placeholder span {
+  font-family: FontAwesome;
+}
+
 .item-check:checked + .item-label {
   
   text-decoration:line-through;
 }
+.icon {
+ 
+  transform: translateY(-50%);
+  font-size: 20px; /* Adjust the icon size as needed */
+  color: #007bff; /* Customize the icon color as needed */
+  pointer-events: none; /* Allow clicking through the icon */
+}
+
+
+.input-placeholder input {
+  padding: 10px;
+  
+  border-radius: 6px;
+  border: 1px solid #8e8e8e;
+}
+.input-placeholder input:valid + .placeholder {
+  display: none;
+}
+
+.placeholder {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  height: 25px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  font-size: 15px;
+  left: 10px;
+  margin: auto;
+  color: #8e8e8e;
+  display: flex;
+  display: flex;
+  align-items: center;
+ 
+}
+
+.placeholder span {
+  color: #8e8e8e;
+  font-family: FontAwesome;
+}
+
 .task-item {
     display: flex;
     align-items: center;
