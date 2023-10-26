@@ -3,17 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/3dbdf65c77.js" crossorigin="anonymous"></script>
+   
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Task Reminder</title>
 </head>
 <body>
+    <script>
+        function clearlist(){
+            const mainlist = document.getElementsByClassName("fa-ul")[0];
+
+           
+    localStorage.clear();
+    buildlist();
+    while (mainlist.firstChild) {
+                mainlist.removeChild(mainlist.firstChild);
+            }
+}
+function buildlist(){
+    for (const key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            buildliitem(key);
+            
+
+        }
+    }
+}
+function buildliitem(value){
+    const labelValue = value;
+
+// Get the value from local storage
+const storedValue = localStorage.getItem(labelValue);
+
+// // Create a new checkbox element
+// const checkbox = document.createElement("input");
+// checkbox.type = "checkbox";
+// checkbox.id = labelValue;
+// checkbox.className = "item-check";
+
+// // Set the checkbox's checked property based on the stored value
+// if (storedValue === "true") {
+   
+//     checkbox.checked = true;
+// }
+
+
+    const mainlist = document.getElementsByClassName("fa-ul")[0];
+
+    const li = document.createElement("li");
+      
+    li.innerHTML = `
+        <section class="item">
+            <span class="fa-li"><i class="fas fa-grip-vertical"></i></span>
+            <input type="checkbox" id="${labelValue}" class="item-check">
+        <label for="${labelValue}" class="item-label">${labelValue}</label>
+            <div class="menu-container">
+                <button class="icon-button menu-button">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <ul class="menu" >
+                    <li><i class="fa fa-check"></i> <button class="inside" >Complete</button></li>
+                    <li><i class="fas fa-trash"></i> <button class="inside">Delete</button></li>
+                </ul>
+            </div>
+        </section>
+    `;
+    const checkbox = li.querySelector(".item-check");
+if (storedValue === "true") {
+    checkbox.checked = true;
+}
+    // Append the <li> element to the taskList
+    mainlist.appendChild(li);
+
+}
+
+function filterItems(filter) {
+    const items = document.querySelectorAll(".fa-ul > li");
+    
+    items.forEach((item) => {
+        
+        const checkbox = item.querySelector(".item-check");
+       
+        const labelValue = checkbox.id;
+       
+        const storedValue = localStorage.getItem(labelValue);
+        
+        if (filter === "all" || (filter === "completed" && storedValue === "true") || (filter === "pending" && storedValue === "false")) {
+            item.style.display = "list-item";
+           
+        } else {
+            item.style.display = "none";
+           
+        }
+    });
+}
+
+
+// Initially, call the filterItems function with "All" to show all items when the page loads
+filterItems("All");
+    </script>
     <div class="container">
       
         <main>
             
                 <div class="input-placeholder">
-                    <input type="text" class="input-text" required>
+                    <input type="text" class="input-text" required >
                     <div class="placeholder">
                         <span>&#xf550;</span>&nbsp; Add a new task
                     </div>
@@ -33,14 +127,49 @@
   <div class="tab tex">
   <input type="radio" name="task-tab" id="tab-completed">
   <label for="tab-completed">Completed</label></div>
-                        <button class="tab delete" >Clear All</button>
+                        <button class="tab delete" onclick="clearlist()">Clear All</button>
                      
                 </div>
                 
                    
                 <div class ="items">
-                    <ul class="fa-ul">
-                        <li >
+                
+                    <ul class="fa-ul" id="item-list">
+                       
+                  
+                        <script>
+                            
+                            buildlist();
+
+                        // <!-- <script> for (const key in localStorage) {
+                        //     if (localStorage.hasOwnProperty(key)) {
+                                
+                
+                        //         const li = document.createElement("li");
+                        //         li.innerHTML = `
+                        //             <section class="item">
+                        //                 <span class="fa-li"><i class="fas fa-grip-vertical"></i></span>
+                        //                 <input type="checkbox" id="${key}" class="item-check" }>
+                        //                 <label for="${key}" class="item-label">${key}</label>
+                        //                 <div class="menu-container">
+                        //                     <button class="icon-button menu-button">
+                        //                         <i class="fas fa-ellipsis-h"></i>
+                        //                     </button>
+                        //                     <ul class="menu">
+                        //                         <li><i class="fa fa-check"></i> <button class="inside">Complete</button></li>
+                        //                         <li><i class="fas fa-trash"></i> <button class="inside">Delete</button></li>
+                        //                     </ul>
+                        //                 </div>
+                        //             </section>
+                        //         `;
+                                
+                        //         // Append the <li> element to the taskList
+                        //             const mainlist = document.getElementsByClassName("fa-ul")[0];
+                        //             mainlist.appendChild(li);
+                        //     }
+                        // } -->
+                    </script>
+                        <!-- <li >
                             <section class ="item">
                             <span class="fa-li"><i class="fas fa-grip-vertical"></i></span>
                   
@@ -57,7 +186,7 @@
                         </ul>
                         </div>
                     </section>
-                </li>
+                </li> -->
                 </ul>
                 </div>
                 
@@ -65,6 +194,8 @@
             </section>
         </main>
     </div>
+
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
 

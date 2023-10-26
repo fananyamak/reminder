@@ -214,11 +214,11 @@ border:none;
   border-bottom: 1px solid gray;
 }
 
-.menu-button:focus + .menu {
+/* .menu-button:focus + .menu {
   display: flex;
   flex-direction: column;
  place-content: center;
-}
+} */
 .menu li {
  
   display: flex;
@@ -323,6 +323,9 @@ border:none;
     cursor: pointer;
 }
 
+.inside {
+  cursor: pointer;
+}
 /* Optional hover effect for task items */
 .task-item:hover {
     background-color: #e0e0e0;
