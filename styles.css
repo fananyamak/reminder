@@ -213,6 +213,11 @@ border:none;
 .fa-ul li:first-child{
   border-bottom: 1px solid gray;
 }
+/* Add this CSS to your stylesheet */
+li.dragged {
+  background-color: lightgray;
+  cursor: move; /* Change cursor style to 'move' */
+}
 
 /* .menu-button:focus + .menu {
   display: flex;

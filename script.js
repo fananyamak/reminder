@@ -113,3 +113,86 @@ document.querySelectorAll(".tab label").forEach((tabLabel) => {
         filterItems(filter);
     });
 });
+const list = document.getElementById("item-list");
+
+let draggedItem = null;
+
+list.addEventListener("dragstart", (e) => {
+    if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
+        const listItem = e.target.closest("li");
+    if (listItem) {
+        draggedItem = listItem;
+        draggedItem.classList.add("dragged"); // Add the "dragged" class
+        e.dataTransfer.setData("text/plain", listItem.id);
+    }
+    } else {
+        
+        e.preventDefault(); // Prevent dragging other elements
+    }
+});
+list.addEventListener("dragend", (e) => {
+    if (draggedItem) {
+        draggedItem.classList.remove("dragged"); // Remove the "dragged" class
+        draggedItem = null;
+    }
+});
+
+list.addEventListener("dragover", (e) => {
+    
+    e.preventDefault(); // Allow drop event
+   
+});
+list.addEventListener("dragleave", (e) => {
+    // Handle drag leave as needed (e.g., removing the "dragged" class)
+    if (draggedItem) {
+        draggedItem.classList.remove("dragged");
+    }
+});
+
+list.addEventListener("drop", (e) => {
+    
+    e.preventDefault();
+    let dropTarget = e.target;
+
+    
+        dropTarget = dropTarget.closest("li");
+    
+   
+
+
+    // Swap the positions of the dragged item and the drop target
+    if (draggedItem && dropTarget && draggedItem !== dropTarget) {
+        const items = list.querySelectorAll("li");
+        const draggedIndex = Array.from(items).indexOf(draggedItem);
+        const dropIndex = Array.from(items).indexOf(dropTarget);
+
+        if (draggedIndex !== -1 && dropIndex !== -1) {
+            if (draggedIndex < dropIndex) {
+                list.insertBefore(draggedItem, dropTarget.nextSibling);
+            } else {
+                list.insertBefore(draggedItem, dropTarget);
+            }
+        }
+
+        const Stitems = document.querySelectorAll('.fa-ul > li');
+        const updatedOrder = Array.from(Stitems).map((item) => item.querySelector('.item-label').textContent);
+       
+        // Step 3: Clear the old data from local storage
+       
+    
+        // Step 4: Store the updated data with the new order back into local storage
+        updatedOrder.forEach((value, index) => {
+           
+          localStorage.setItem(value, Stitems[index].querySelector('.item-check').checked.toString());
+          console.log(value);
+        });
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            console.log(`Key: ${key}, Value: ${value}`);
+        }
+    }
+    draggedItem.classList.remove("dragged");
+
+    draggedItem = null;
+});
