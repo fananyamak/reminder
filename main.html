@@ -10,24 +10,63 @@
 </head>
 <body>
     <script>
+        function updateLocalStorageOrder() {
+            localStorage.clear();
+    const items = document.querySelectorAll(".fa-ul > li");
+    const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
+
+    // Store the ordered array of keys in local storage
+    localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
+    print(localStorage["itemOrder"]);
+
+    // Update individual item values in local storage as needed
+    updatedOrder.forEach((value, index) => {
+        localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
+    });
+}
+
+// Function to load items from local storage in the desired order
+function loadItemsFromLocalStorage() {
+    console.log("hibuild");
+    // Retrieve the ordered array of keys from local storage
+    const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
+
+    if (itemOrder) {
+        // Loop through the ordered array of keys and retrieve the corresponding items
+        itemOrder.forEach((key) => {
+            // Retrieve the item from local storage and create the list item
+            const storedValue = localStorage.getItem(key);
+            if (storedValue !== null) {
+                // Create and append the list item based on the retrieved value
+                buildliitem(key);
+            }
+        });
+    }
+}
+// window.onload = function() {
+//     // Your code to be executed when the page loads goes here
+//     loadItemsFromLocalStorage(); // Call your function here
+// }
         function clearlist(){
             const mainlist = document.getElementsByClassName("fa-ul")[0];
 
            
     localStorage.clear();
-    buildlist();
+    updateLocalStorageOrder();
     while (mainlist.firstChild) {
                 mainlist.removeChild(mainlist.firstChild);
             }
 }
 function buildlist(){
-    for (const key in localStorage) {
-        if (localStorage.hasOwnProperty(key)) {
-            buildliitem(key);
+    console.log("hibuild");
+    updateLocalStorageOrder();
+    // for (const key in localStorage) {
+    //     if (localStorage.hasOwnProperty(key)) {
+    //         buildliitem(key);
             
 
-        }
-    }
+    //     }
+    // }
 }
 function buildliitem(value){
     const labelValue = value;
@@ -141,7 +180,7 @@ filterItems("All");
                   
                         <script>
                             
-                            buildlist();
+                            loadItemsFromLocalStorage() ;
 
                         // <!-- <script> for (const key in localStorage) {
                         //     if (localStorage.hasOwnProperty(key)) {
