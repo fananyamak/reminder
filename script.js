@@ -1,34 +1,11 @@
 
-let counter=0;
-
-
-
-
-
-class task{
-    
-     task_done=false;
-     task_name= "";
-
-     constructor(name){
-        this.task_done=false;
-        this.task_name=name;
-     }
-
-     set_done(){
-        this.task_done=true;
-
-     }
-
-
-}
 
 
 
 const node = document.getElementsByClassName("input-text")[0];
 node.addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
-       // localStorage.setItem(node.value,"false");
+      
        const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
        itemOrder.push(node.value);
        console.log(itemOrder);
@@ -36,7 +13,7 @@ node.addEventListener("keyup", function(event) {
         updateLocalStorageOrder();
                 node.value="";
                 
-        // Do work
+      
         
     }
 });
@@ -56,7 +33,7 @@ document.getElementById("item-list").addEventListener("click", function (event) 
         const labelForCheckbox = document.querySelector(`label[for="${checkbox.id}"]`);
 
 
-        // Check if the "Complete" button was clicked
+       
         if (target.textContent === "Complete") {
             const checkbox = listItem.querySelector(".item-check");
             checkbox.checked = true;
@@ -66,33 +43,25 @@ document.getElementById("item-list").addEventListener("click", function (event) 
             updateLocalStorageOrder() ;
         }
 
-        // Check if the "Delete" button was clicked
+       
         if (target.textContent === "Delete") {
-            // Find the label element within the list item
+           
         const labelElement = listItem.querySelector(".item-label");
         const labelValue = labelElement.textContent;
-            // const listItemValue = listItem.querySelector(".item-label").textContent;
-
-            // // Remove the item from local storage
-            // const items = JSON.parse(localStorage.getItem("items")) || [];
-            // const updatedItems = items.filter((item) => item !== listItemValue);
-            // localStorage.setItem("items", JSON.stringify(updatedItems));
-            //localStorage.removeItem(labelValue);
-
-            // Remove the list item from the DOM
+          
             listItem.remove();
             const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
 const indexToRemove = itemOrder.indexOf(labelValue);
 
 if (indexToRemove !== -1) {
-    // Remove the item from the item order array
+   
     itemOrder.splice(indexToRemove, 1);
 
-    // Update the item order in local storage
+  
     localStorage.setItem("itemOrder", JSON.stringify(itemOrder));
 
-    // Remove the item from the list
-    // You might need to add code to remove the HTML element from the DOM
+    
+   
 }
         }
         const menu = target.closest('.item').querySelector('.menu');
@@ -102,11 +71,11 @@ if (indexToRemove !== -1) {
 
 const menuButtons = document.querySelectorAll('.menu-button');
 
-// Add click event listener to each menu button
+
 menuButtons.forEach((button) => {
     button.addEventListener('click', function() {
-        // Find the corresponding menu for this button
-        const menu = this.nextElementSibling; // Assumes the menu is always a sibling of the button
+       
+        const menu = this.nextElementSibling; 
         menu.style.display = 'flex';
         menu.style.flexDirection = 'column';
         menu.style.placeContent = 'center';
@@ -117,11 +86,11 @@ document.getElementById("item-list").addEventListener("change", function (event)
     const target = event.target;
    
     if (target.classList.contains("item-check")) {
-        // Get the label for this checkbox
+   
         const labelValue = target.id;
         
 
-        // Update the value in local storage based on the checkbox state
+       
         localStorage.setItem(labelValue, target.checked.toString());
     }
 });
@@ -133,58 +102,41 @@ document.querySelectorAll(".tab label").forEach((tabLabel) => {
         filterItems(filter);
     });
 });
-// const list = document.getElementById("item-list");
 
-// let draggedItem = null;
+
+const list = document.getElementById("item-list");
+
+//let draggedItem = null;
 
 // list.addEventListener("dragstart", (e) => {
 //     if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
 //         const listItem = e.target.closest("li");
-//         if (listItem) {
-//             draggedItem = listItem;
-//             draggedItem.classList.add("dragging");
+//     if (listItem) {
+//         draggedItem = listItem;
+//         draggedItem.classList.add("dragged"); 
+//         e.dataTransfer.setData("text/plain", listItem.id);
+//     }
+//     } else {
         
-//             e.dataTransfer.setData("text/plain", draggedItem.dataset.index);
-//         }
-//     }else {
-        
-//         e.preventDefault(); // Prevent dragging other elements
+//         e.preventDefault(); 
 //     }
 // });
-// const icons = document.querySelectorAll(".fa-grip-vertical");
-
-// icons.forEach((icon) => {
-//     icon.addEventListener("dragstart", (e) => {
-//         const listItem = icon.closest("li");
-//         listItem.style.display = "none"; // Hide the list item
-//         e.dataTransfer.setDragImage(listItem, 0, 0); // Set the drag image to the entire list item
-//     });
-// });
 // list.addEventListener("dragend", (e) => {
-//     const draggedItem = document.querySelector(".dragging");
-//         draggedItem.classList.remove("dragging");
+//     if (draggedItem) {
+//         draggedItem.classList.remove("dragged"); 
+//         draggedItem = null;
+//     }
 // });
 
 // list.addEventListener("dragover", (e) => {
-//     e.preventDefault();
-//     if (draggedItem) {
-//         const dropTarget = e.target.closest("li");
-//         if (dropTarget) {
-//             // Remove the "dragged" class from any previously dragged item
-//             const previouslyDragged = list.querySelector(".dragged");
-//             if (previouslyDragged) {
-//                 previouslyDragged.classList.remove("dragged");
-//             }
-//             dropTarget.classList.add("dragged");
-//         }
-//     }
+    
+//     e.preventDefault(); 
+   
 // });
 // list.addEventListener("dragleave", (e) => {
+    
 //     if (draggedItem) {
-//         const dropTarget = e.target.closest("li");
-//         if (dropTarget) {
-//             dropTarget.classList.remove("dragged");
-//         }
+//         draggedItem.classList.remove("dragged");
 //     }
 // });
 
@@ -199,7 +151,7 @@ document.querySelectorAll(".tab label").forEach((tabLabel) => {
    
 
 
-//     // Swap the positions of the dragged item and the drop target
+    
 //     if (draggedItem && dropTarget && draggedItem !== dropTarget) {
 //         const items = list.querySelectorAll("li");
 //         const draggedIndex = Array.from(items).indexOf(draggedItem);
@@ -212,134 +164,113 @@ document.querySelectorAll(".tab label").forEach((tabLabel) => {
 //                 list.insertBefore(draggedItem, dropTarget);
 //             }
 //         }
-
-//         const Stitems = document.querySelectorAll('.fa-ul > li');
-//         const updatedOrder = Array.from(Stitems).map((item) => item.querySelector('.item-label').textContent);
-       
-//         // Step 3: Clear the old data from local storage
-       
-    
-//         // Step 4: Store the updated data with the new order back into local storage
-//         updatedOrder.forEach((value, index) => {
-           
-//           localStorage.setItem(value, Stitems[index].querySelector('.item-check').checked.toString());
-//           console.log(value);
-//         });
-//         for (let i = 0; i < localStorage.length; i++) {
-//             const key = localStorage.key(i);
-//             const value = localStorage.getItem(key);
-//             console.log(`Key: ${key}, Value: ${value}`);
-//         }
 //     }
-//     dropTarget.classList.remove("dragged");
+//     localStorage.clear();
 //     draggedItem.classList.remove("dragged");
+//     updateLocalStorageOrder();
 
 //     draggedItem = null;
 // });
+let draggingEle;
+    let placeholder;
+    let isDraggingStarted = false;
 
-// const icons = document.querySelectorAll(".fa-grip-vertical");
+    
+    let x = 0;
+    let y = 0;
+   
+   
+    const swap = function (nodeA, nodeB) {
+        const parentA = nodeA.parentNode;
+        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
 
-// icons.forEach((icon) => {
-//     icon.addEventListener("dragstart", (e) => {
-//         const listItem = icon.closest("li");
-//         e.dataTransfer.setDragImage(listItem, 0, 0);
-//         listItem.classList.add("dragged");
-//         const clonedItem = listItem.cloneNode(true);
-//         clonedItem.classList.add("clone");
-//         document.body.appendChild(clonedItem);
-//     });
-// });
-
-// document.body.addEventListener("dragend", () => {
-//     const clonedItem = document.querySelector(".clone");
-//     if (clonedItem) {
-//         clonedItem.parentNode.removeChild(clonedItem);
-//     }
-//     const draggedItem = document.querySelector(".dragged");
-//     if (draggedItem) {
-//         draggedItem.classList.remove("dragged");
-//     }
-// });
-
-// const itemList = document.getElementById("item-list");
-
-// itemList.addEventListener("dragover", (e) => {
-//     e.preventDefault();
-//     const draggedItem = document.querySelector(".dragged");
-//     if (draggedItem) {
-//         listItem.style.display = "none"; // Hide the list item
-//         const li = document.elementFromPoint(e.clientX, e.clientY);
-//         if (li && li.tagName === "LI" && !li.classList.contains("dragged")) {
-//             itemList.insertBefore(draggedItem, li);
-//         }
-
-//     }
-// });
-
-const list = document.getElementById("item-list");
-
-let draggedItem = null;
-
-list.addEventListener("dragstart", (e) => {
-    if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
-        const listItem = e.target.closest("li");
-    if (listItem) {
-        draggedItem = listItem;
-        draggedItem.classList.add("dragged"); // Add the "dragged" class
-        e.dataTransfer.setData("text/plain", listItem.id);
-    }
-    } else {
         
-        e.preventDefault(); // Prevent dragging other elements
-    }
-});
-list.addEventListener("dragend", (e) => {
-    if (draggedItem) {
-        draggedItem.classList.remove("dragged"); // Remove the "dragged" class
-        draggedItem = null;
-    }
-});
+        nodeB.parentNode.insertBefore(nodeA, nodeB);
 
-list.addEventListener("dragover", (e) => {
+     
+        parentA.insertBefore(nodeB, siblingA);
+    };
+
     
-    e.preventDefault(); // Allow drop event
+    const isAbove = function (nodeA, nodeB) {
+       
+        const rectA = nodeA.getBoundingClientRect();
+        const rectB = nodeB.getBoundingClientRect();
+
+        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+    };
+
+    list.addEventListener("mousedown", (e) => {
+    console.log(e.target.tagName);
+    if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
+        draggingEle= e.target.closest("li");
+        
+
+    
+    const rect = draggingEle.getBoundingClientRect();
+    x = e.pageX - rect.left;
+    y = e.pageY - rect.top;
+
+    
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseup', mouseUpHandler);}
+    else{
+        e.preventDefault(); 
+    }
+});
+const mouseMoveHandler = function (e) {
+    const draggingRect = draggingEle.getBoundingClientRect();
+
+    if (!isDraggingStarted) {
+        isDraggingStarted = true;
+       
+    
+        placeholder = document.createElement('div');
+        placeholder.classList.add('placeholder');
+        draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
+        placeholder.style.height = draggingRect.height + 'px';
+    }
+
    
-});
-list.addEventListener("dragleave", (e) => {
-    // Handle drag leave as needed (e.g., removing the "dragged" class)
-    if (draggedItem) {
-        draggedItem.classList.remove("dragged");
+    draggingEle.style.position = 'absolute';
+    draggingEle.style.top = (e.pageY - y) + 'px';
+    draggingEle.style.left = (e.pageX - x) + 'px';
+
+    
+    const prevEle = draggingEle.previousElementSibling;
+    const nextEle = placeholder.nextElementSibling;
+
+
+    if (prevEle && isAbove(draggingEle, prevEle)) {
+       
+        swap(placeholder, draggingEle);
+        swap(placeholder, prevEle);
+        return;
     }
-});
 
-list.addEventListener("drop", (e) => {
-    
-    e.preventDefault();
-    let dropTarget = e.target;
-
-    
-        dropTarget = dropTarget.closest("li");
-    
-   
-
-
-    // Swap the positions of the dragged item and the drop target
-    if (draggedItem && dropTarget && draggedItem !== dropTarget) {
-        const items = list.querySelectorAll("li");
-        const draggedIndex = Array.from(items).indexOf(draggedItem);
-        const dropIndex = Array.from(items).indexOf(dropTarget);
-
-        if (draggedIndex !== -1 && dropIndex !== -1) {
-            if (draggedIndex < dropIndex) {
-                list.insertBefore(draggedItem, dropTarget.nextSibling);
-            } else {
-                list.insertBefore(draggedItem, dropTarget);
-            }
-        }
+    if (nextEle && isAbove(nextEle, draggingEle)) {
+        
+        swap(nextEle, placeholder);
+        swap(nextEle, draggingEle);
     }
-    localStorage.clear();
-    draggedItem.classList.remove("dragged");
+};
+
+const mouseUpHandler = function () {
+    
+    placeholder && placeholder.parentNode.removeChild(placeholder);
+
+    draggingEle.style.removeProperty('top');
+    draggingEle.style.removeProperty('left');
+    draggingEle.style.removeProperty('position');
+
+    x = null;
+    y = null;
+    draggingEle = null;
+    isDraggingStarted = false;
+
+    
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
     updateLocalStorageOrder();
+};
 
-    draggedItem = null;
-});

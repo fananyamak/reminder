@@ -15,39 +15,35 @@
     const items = document.querySelectorAll(".fa-ul > li");
     const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
 
-    // Store the ordered array of keys in local storage
+    
     localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
-    print(localStorage["itemOrder"]);
+    
 
-    // Update individual item values in local storage as needed
+  
     updatedOrder.forEach((value, index) => {
         localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
     });
 }
 
-// Function to load items from local storage in the desired order
+
 function loadItemsFromLocalStorage() {
-    console.log("hibuild");
-    // Retrieve the ordered array of keys from local storage
+  
+    
     const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
 
     if (itemOrder) {
-        // Loop through the ordered array of keys and retrieve the corresponding items
+       
         itemOrder.forEach((key) => {
-            // Retrieve the item from local storage and create the list item
+            
             const storedValue = localStorage.getItem(key);
             if (storedValue !== null) {
-                // Create and append the list item based on the retrieved value
+               
                 buildliitem(key);
             }
         });
     }
 }
-// window.onload = function() {
-//     // Your code to be executed when the page loads goes here
-//     loadItemsFromLocalStorage(); // Call your function here
-// }
-        function clearlist(){
+    function clearlist(){
             const mainlist = document.getElementsByClassName("fa-ul")[0];
 
            
@@ -60,31 +56,15 @@ function loadItemsFromLocalStorage() {
 function buildlist(){
     console.log("hibuild");
     updateLocalStorageOrder();
-    // for (const key in localStorage) {
-    //     if (localStorage.hasOwnProperty(key)) {
-    //         buildliitem(key);
-            
-
-    //     }
-    // }
+   
 }
 function buildliitem(value){
     const labelValue = value;
 
-// Get the value from local storage
+
 const storedValue = localStorage.getItem(labelValue);
 
-// // Create a new checkbox element
-// const checkbox = document.createElement("input");
-// checkbox.type = "checkbox";
-// checkbox.id = labelValue;
-// checkbox.className = "item-check";
 
-// // Set the checkbox's checked property based on the stored value
-// if (storedValue === "true") {
-   
-//     checkbox.checked = true;
-// }
 
 
     const mainlist = document.getElementsByClassName("fa-ul")[0];
@@ -112,7 +92,7 @@ const storedValue = localStorage.getItem(labelValue);
 if (storedValue === "true") {
     checkbox.checked = true;
 }
-    // Append the <li> element to the taskList
+   
     mainlist.appendChild(li);
 
 }
@@ -140,7 +120,6 @@ function filterItems(filter) {
 }
 
 
-// Initially, call the filterItems function with "All" to show all items when the page loads
 filterItems("All");
     </script>
     <div class="container">
@@ -182,52 +161,9 @@ filterItems("All");
                             
                             loadItemsFromLocalStorage() ;
 
-                        // <!-- <script> for (const key in localStorage) {
-                        //     if (localStorage.hasOwnProperty(key)) {
-                                
-                
-                        //         const li = document.createElement("li");
-                        //         li.innerHTML = `
-                        //             <section class="item">
-                        //                 <span class="fa-li"><i class="fas fa-grip-vertical"></i></span>
-                        //                 <input type="checkbox" id="${key}" class="item-check" }>
-                        //                 <label for="${key}" class="item-label">${key}</label>
-                        //                 <div class="menu-container">
-                        //                     <button class="icon-button menu-button">
-                        //                         <i class="fas fa-ellipsis-h"></i>
-                        //                     </button>
-                        //                     <ul class="menu">
-                        //                         <li><i class="fa fa-check"></i> <button class="inside">Complete</button></li>
-                        //                         <li><i class="fas fa-trash"></i> <button class="inside">Delete</button></li>
-                        //                     </ul>
-                        //                 </div>
-                        //             </section>
-                        //         `;
-                                
-                        //         // Append the <li> element to the taskList
-                        //             const mainlist = document.getElementsByClassName("fa-ul")[0];
-                        //             mainlist.appendChild(li);
-                        //     }
-                        // } -->
+                        
                     </script>
-                        <!-- <li >
-                            <section class ="item">
-                            <span class="fa-li"><i class="fas fa-grip-vertical"></i></span>
-                  
-                       
-                        <input type="checkbox" id="item1" class="item-check" >
-                        <label for="item1" class="item-label">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout </label>
-                        <div class="menu-container">
-                        <button class="icon-button menu-button">
-                            <i class="fas fa-ellipsis-h"></i> 
-                        </button>
-                        <ul class="menu">
-                            <li><i class="	fa fa-check"></i> <button class="inside">Complete</button></li>
-                            <li><i class="	fas fa-trash"></i> <button class="inside">Delete</button></li>
-                        </ul>
-                        </div>
-                    </section>
-                </li> -->
+                        
                 </ul>
                 </div>
                 
