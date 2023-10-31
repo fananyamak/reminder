@@ -48,8 +48,11 @@ document.getElementById("item-list").addEventListener("click", function (event) 
         if (target.textContent === "Delete") {
             const labelElement = listItem.querySelector(".item-label");
             const labelValue = labelElement.textContent;
+
           
-            listItem.remove();
+            const listItemsec =listItem.parentNode;
+            const ullistItem = listItemsec.parentNode;
+            ullistItem.removeChild(listItemsec);
             const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
             const indexToRemove = itemOrder.indexOf(labelValue);
 
@@ -58,6 +61,7 @@ document.getElementById("item-list").addEventListener("click", function (event) 
                 itemOrder.splice(indexToRemove, 1);//remove from itemorder and update localstorage
                 localStorage.setItem("itemOrder", JSON.stringify(itemOrder));
                 }
+                updateLocalStorageOrder();
         }
 
         const menu = target.closest('.item').querySelector('.menu');
