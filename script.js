@@ -73,17 +73,23 @@ document.getElementById("item-list").addEventListener("click", function (event) 
 
 
 //change the menu visibility 
+const menuContainer = document.getElementById('item-list');
 
-const menuButtons = document.querySelectorAll('.menu-button');
-menuButtons.forEach((button) => {
-    button.addEventListener('click', function() {
+menuContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('fa-ellipsis-h')) {
+
+// const menuButtons = document.querySelectorAll('.menu-button');
+// menuButtons.forEach((button) => {
+//     button.addEventListener('click', function() {
+    const targetparent = event.target.parentNode;
        
-        const menu = this.nextElementSibling; 
+        const menu = targetparent.nextElementSibling; 
         menu.style.display = 'flex';
         menu.style.flexDirection = 'column';
         menu.style.placeContent = 'center';
-    });
-});
+//     });
+// });
+    }});
  
 function showmenu(){
     
@@ -231,15 +237,26 @@ const mouseUpHandler = function () {
 
 //hide menu when press outside container 
 
-const menuContainers = document.querySelectorAll('.menu-container');
-const menus = document.querySelectorAll('.menu');
+// const menuContainers = document.querySelectorAll('.menu-container');
+// const menus = document.querySelectorAll('.menu');
 
-document.addEventListener('click', function (event) {
-    menuContainers.forEach((menuContainer, index) => {
-        if (!menuContainer.contains(event.target)) {
-            menus[index].style.display = "none";
-        }
-    });
+// document.addEventListener('click', function (event) {
+//     menuContainers.forEach((menuContainer, index) => {
+//         if (!menuContainer.contains(event.target)) {
+//             menus[index].style.display = "none";
+//         }
+//     });
+// });
+
+document.addEventListener('click', function(event) {
+    const menuContainer = event.target.closest('.menu-container');
+    const allMenus = document.querySelectorAll('.menu');
+
+    if (!menuContainer) {
+        allMenus.forEach(menu => {
+            menu.style.display = 'none';
+        });
+    } 
 });
         
        
