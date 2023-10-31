@@ -49,11 +49,12 @@ function loadItemsFromLocalStorage() {
     function clearlist(){
             const mainlist = document.getElementsByClassName("fa-ul")[0];
             localStorage.clear();
-            updateLocalStorageOrder();
-
             while (mainlist.firstChild) {
                  mainlist.removeChild(mainlist.firstChild);
             }
+            updateLocalStorageOrder();
+
+          
             
     }   
 
