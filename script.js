@@ -124,25 +124,17 @@ let x = 0;
 let y = 0;
    
    
-    const swap = function (nodeA, nodeB) {
-        const parentA = nodeA.parentNode;
-        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+    const swap = function (first, sec) {
+        const parentA = first.parentNode;
+        const siblingA = first.nextSibling === sec ? first : first.nextSibling;
 
         
-        nodeB.parentNode.insertBefore(nodeA, nodeB);
-
-     
-        parentA.insertBefore(nodeB, siblingA);
+        sec.parentNode.insertBefore(first, sec);
+        parentA.insertBefore(sec, siblingA);
     };
 
     
-    const isAbove = function (nodeA, nodeB) {
-       
-        const rectA = nodeA.getBoundingClientRect();
-        const rectB = nodeB.getBoundingClientRect();
-
-        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-    };
+    
 
     list.addEventListener("mousedown", (e) => {
     console.log(e.target.tagName);
@@ -162,6 +154,15 @@ let y = 0;
         e.preventDefault(); 
     }
 });
+
+
+const isAbove = function (first, sec) {
+       
+    const rectA = first.getBoundingClientRect();
+    const rectB = sec.getBoundingClientRect();
+
+    return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+};
 const mouseMoveHandler = function (e) {
     const draggingRect = draggingEle.getBoundingClientRect();
 
@@ -181,23 +182,25 @@ const mouseMoveHandler = function (e) {
     draggingEle.style.left = (e.pageX - x) + 'px';
 
     
-    const prevEle = draggingEle.previousElementSibling;
-    const nextEle = placeholder.nextElementSibling;
+    const prev = draggingEle.previousElementSibling;
+    const nextel = placeholder.nextElementSibling;
 
 
-    if (prevEle && isAbove(draggingEle, prevEle)) {
+    if (prev && isAbove(draggingEle, prev)) {
        
         swap(placeholder, draggingEle);
-        swap(placeholder, prevEle);
+        swap(placeholder, prev);
         return;
     }
 
-    if (nextEle && isAbove(nextEle, draggingEle)) {
+    if (nextel && isAbove(nextel, draggingEle)) {
         
-        swap(nextEle, placeholder);
-        swap(nextEle, draggingEle);
+        swap(nextel, placeholder);
+        swap(nextel, draggingEle);
     }
 };
+
+
 
 const mouseUpHandler = function () {
     
@@ -216,5 +219,6 @@ const mouseUpHandler = function () {
     document.removeEventListener('mousemove', mouseMoveHandler);
     document.removeEventListener('mouseup', mouseUpHandler);
     updateLocalStorageOrder();
+    window.location.reload();
 };
 
