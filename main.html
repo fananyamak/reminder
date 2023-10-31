@@ -9,21 +9,23 @@
     <title>Task Reminder</title>
 </head>
 <body>
+
+
     <script>
+        
+        //used in any change 
         function updateLocalStorageOrder() {
             localStorage.clear();
-    const items = document.querySelectorAll(".fa-ul > li");
-    const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
+            const items = document.querySelectorAll(".fa-ul > li");
+            const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
 
-    
-    localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
-    
+            localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
 
-  
-    updatedOrder.forEach((value, index) => {
-        localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
+            updatedOrder.forEach((value, index) => {
+                localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
     });
 }
+
 
 
 function loadItemsFromLocalStorage() {
@@ -34,41 +36,41 @@ function loadItemsFromLocalStorage() {
     if (itemOrder) {
        
         itemOrder.forEach((key) => {
-            
-            const storedValue = localStorage.getItem(key);
+
+        const storedValue = localStorage.getItem(key);
             if (storedValue !== null) {
-               
-                buildliitem(key);
+               buildliitem(key);
             }
         });
     }
 }
+
+
     function clearlist(){
             const mainlist = document.getElementsByClassName("fa-ul")[0];
+            localStorage.clear();
+            updateLocalStorageOrder();
 
-           
-    localStorage.clear();
-    updateLocalStorageOrder();
-    while (mainlist.firstChild) {
-                mainlist.removeChild(mainlist.firstChild);
+            while (mainlist.firstChild) {
+                 mainlist.removeChild(mainlist.firstChild);
             }
-}
+    }   
+
+
+
+//not used 
 function buildlist(){
     console.log("hibuild");
     updateLocalStorageOrder();
    
 }
+
+
+
 function buildliitem(value){
     const labelValue = value;
-
-
-const storedValue = localStorage.getItem(labelValue);
-
-
-
-
+    const storedValue = localStorage.getItem(labelValue);
     const mainlist = document.getElementsByClassName("fa-ul")[0];
-
     const li = document.createElement("li");
     
       
@@ -98,6 +100,9 @@ if (storedValue === "true") {
 }
 
 
+
+//used when change the tab
+
 function filterItems(filter) {
     const items = document.querySelectorAll(".fa-ul > li");
     
@@ -119,8 +124,8 @@ function filterItems(filter) {
     });
 }
 
+filterItems("All"); // initial case 
 
-filterItems("All");
     </script>
     <div class="container">
       
@@ -138,33 +143,35 @@ filterItems("All");
                 <div class ="head">
                     <div class="tab tex">
                     <input type="radio" name="task-tab" id="tab-all" checked>
-  <label for="tab-all">All</label>
-</div>
-<div class="tab tex">
-  <input type="radio" name="task-tab" id="tab-pending">
-  <label for="tab-pending">Pending</label>
-</div>
-  <div class="tab tex">
-  <input type="radio" name="task-tab" id="tab-completed">
-  <label for="tab-completed">Completed</label></div>
-                        <button class="tab delete" onclick="clearlist()">Clear All</button>
-                     
+                    <label for="tab-all">All</label>
                 </div>
+
+                    <div class="tab tex">
+                        <input type="radio" name="task-tab" id="tab-pending">
+                        <label for="tab-pending">Pending</label>
+                    </div>
+
+
+                    <div class="tab tex">
+                        <input type="radio" name="task-tab" id="tab-completed">
+                        <label for="tab-completed">Completed</label>
+                    </div>
+
+                        <button class="tab delete" onclick="clearlist()">Clear All</button>
+
+                 </div>
                 
                    
                 <div class ="items">
-                
                     <ul class="fa-ul" id="item-list">
                        
-                  
-                        <script>
+                   <script>
                             
-                            loadItemsFromLocalStorage() ;
-
-                        
+                      loadItemsFromLocalStorage() ;
+   
                     </script>
                         
-                </ul>
+                    </ul>
                 </div>
                 
              
@@ -173,6 +180,7 @@ filterItems("All");
     </div>
 
     <script type="text/javascript" src="script.js"></script>
+    
 </body>
 </html>
 

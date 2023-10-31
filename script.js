@@ -1,5 +1,6 @@
 
 
+//adding new tasks 
 
 
 const node = document.getElementsByClassName("input-text")[0];
@@ -11,25 +12,26 @@ node.addEventListener("keyup", function(event) {
        console.log(itemOrder);
         buildliitem(node.value);
         updateLocalStorageOrder();
-                node.value="";
-                
-      
-        
+                node.value="";   
     }
 });
 
 
+
+
+//handling menu buttons
+
 document.getElementById("item-list").addEventListener("click", function (event) {
     
     const target = event.target;
-   
-   
+
+    //chick if one of menu buttons pressed
+
     if (target.classList.contains("inside")) {
         
         const listItem = target.closest("section");
         if (!listItem) return;
         const checkbox = listItem.querySelector(".item-check");
-      
         const labelForCheckbox = document.querySelector(`label[for="${checkbox.id}"]`);
 
 
@@ -39,39 +41,36 @@ document.getElementById("item-list").addEventListener("click", function (event) 
             checkbox.checked = true;
             const labelElement = target.closest("label");
             const labelText = labelForCheckbox.textContent;
-            
-            updateLocalStorageOrder() ;
+            updateLocalStorageOrder() ; 
         }
 
        
         if (target.textContent === "Delete") {
-           
-        const labelElement = listItem.querySelector(".item-label");
-        const labelValue = labelElement.textContent;
+            const labelElement = listItem.querySelector(".item-label");
+            const labelValue = labelElement.textContent;
           
             listItem.remove();
             const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
-const indexToRemove = itemOrder.indexOf(labelValue);
+            const indexToRemove = itemOrder.indexOf(labelValue);
 
-if (indexToRemove !== -1) {
+                if (indexToRemove !== -1) {
    
-    itemOrder.splice(indexToRemove, 1);
-
-  
-    localStorage.setItem("itemOrder", JSON.stringify(itemOrder));
-
-    
-   
-}
+                itemOrder.splice(indexToRemove, 1);//remove from itemorder and update localstorage
+                localStorage.setItem("itemOrder", JSON.stringify(itemOrder));
+                }
         }
+
         const menu = target.closest('.item').querySelector('.menu');
-        menu.style.display = "none";
+        menu.style.display = "none"; // hide the menu after pressing and handling
     }
 });
 
+
+
+
+//change the menu visibility 
+
 const menuButtons = document.querySelectorAll('.menu-button');
-
-
 menuButtons.forEach((button) => {
     button.addEventListener('click', function() {
        
@@ -82,18 +81,23 @@ menuButtons.forEach((button) => {
     });
 });
 
+
+
+//change the task value
+
 document.getElementById("item-list").addEventListener("change", function (event) {
     const target = event.target;
    
     if (target.classList.contains("item-check")) {
    
         const labelValue = target.id;
-        
-
-       
         localStorage.setItem(labelValue, target.checked.toString());
+        updateLocalStorageOrder();
     }
 });
+
+
+//moving between tabs
 
 document.querySelectorAll(".tab label").forEach((tabLabel) => {
     tabLabel.addEventListener("click", function () {
@@ -104,80 +108,20 @@ document.querySelectorAll(".tab label").forEach((tabLabel) => {
 });
 
 
+
+//handling drag and drop
+
 const list = document.getElementById("item-list");
 
-//let draggedItem = null;
-
-// list.addEventListener("dragstart", (e) => {
-//     if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
-//         const listItem = e.target.closest("li");
-//     if (listItem) {
-//         draggedItem = listItem;
-//         draggedItem.classList.add("dragged"); 
-//         e.dataTransfer.setData("text/plain", listItem.id);
-//     }
-//     } else {
-        
-//         e.preventDefault(); 
-//     }
-// });
-// list.addEventListener("dragend", (e) => {
-//     if (draggedItem) {
-//         draggedItem.classList.remove("dragged"); 
-//         draggedItem = null;
-//     }
-// });
-
-// list.addEventListener("dragover", (e) => {
-    
-//     e.preventDefault(); 
-   
-// });
-// list.addEventListener("dragleave", (e) => {
-    
-//     if (draggedItem) {
-//         draggedItem.classList.remove("dragged");
-//     }
-// });
-
-// list.addEventListener("drop", (e) => {
-    
-//     e.preventDefault();
-//     let dropTarget = e.target;
-
-    
-//         dropTarget = dropTarget.closest("li");
-    
-   
 
 
-    
-//     if (draggedItem && dropTarget && draggedItem !== dropTarget) {
-//         const items = list.querySelectorAll("li");
-//         const draggedIndex = Array.from(items).indexOf(draggedItem);
-//         const dropIndex = Array.from(items).indexOf(dropTarget);
-
-//         if (draggedIndex !== -1 && dropIndex !== -1) {
-//             if (draggedIndex < dropIndex) {
-//                 list.insertBefore(draggedItem, dropTarget.nextSibling);
-//             } else {
-//                 list.insertBefore(draggedItem, dropTarget);
-//             }
-//         }
-//     }
-//     localStorage.clear();
-//     draggedItem.classList.remove("dragged");
-//     updateLocalStorageOrder();
-
-//     draggedItem = null;
-// });
 let draggingEle;
-    let placeholder;
-    let isDraggingStarted = false;
+let placeholder;
+let isDraggingStarted = false;
 
     
-    let x = 0;
-    let y = 0;
+let x = 0;
+let y = 0;
    
    
     const swap = function (nodeA, nodeB) {

@@ -1,21 +1,20 @@
-/* Reset some default styles */
+/* reset  default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Apply styles to the app container */
+/* apply styles to the app container */
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Style the header */
 
 
-/* Style the task input section */
+/* style all inputs  */
 .input-placeholder {
   display: flex;
   gap:0px;
@@ -30,252 +29,21 @@
 .input-text{
   width: 100%;
 }
-
-
 .input-placeholder input {
   width: 97%;
     padding: 3%;
     height:40px;
 }
 
-input[type="radio"] {
-  display: none;
-}
-input[type="radio"]:checked + label {
- 
-  color:#007bff;
-  
- 
- 
- 
-  
-}
-.tab:has(input[type="radio"]:checked)  {
- 
- 
-  border-bottom: 2px solid #007bff;
- 
- 
- 
-  
-}
-
-
-
-.tab-content {
-  display: none;
-}
-.tab{
-  padding: 3%;
-  padding-bottom: 1%;
-  margin :0%;
-  
-
-  
- 
-  
-}
-
-.tex{
-  display: flex;
-  align-items: center;
-}
-.delete{
-  margin-top: 5px;;
-  margin-right: 5px;;
-  display: flex;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-  border-radius: 6px;
-  margin-inline-start: auto;
-  background: linear-gradient(90deg, #007bff 60%, #0056b3);
-}
-
-.list{
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-}
-
-input[type="radio"]:checked ~ .tab-content {
-  display: block;
-}
-
-/* Style the task list section */
-.list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-.head {
-  
-  display :flex;
-    overflow: hidden;
-   margin-left: 2%;
-    padding: 10px;
-   
-    background-color: inherit;
-    border-bottom: 2px solid #ccc; ;
-  }
- 
-  /* Style the buttons that are used to open the tab content */
-  .head button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 8px 12px;
-    transition: 0.3s;
-    height: min-content;
-    width:fit-content;
-  }
-  
-  /* Change background color of buttons on hover */
-  .head button:hover {
-    background-color: #ddd;
-  }
-  
-  /* Create an active/current tablink class */
-  .head button:focus {
-    color :darkcyan;
-    text-decoration: underline;
-  }
-  .head button.delete {
-    color :#e0e0e0;
-    
-  }
-  .items{
-    display:grid;
-    
-  }
-  .item{
-    display :flex;
-    align-items: flex-start; 
-    gap: 10px; 
-   
-    border-bottom: 2px solid #ccc;  
-    padding-top: 5%; 
-    padding-bottom: 5%; 
-    padding-right: 20px;
-  }
-  
-  .item-check {
-    display: flex;
-    align-items: center; 
-    gap: 10px;
-    margin-top: 5px;
-    margin-right: 5px;
-    width:20px;
-   
-      transform: scale(1.2); 
-     margin-left:5px;
-    
-    
-}
-.custom-list{
-  list-style: none;
-}
-.menu-button{
-background-color: inherit;
-border:none;
-}
-.inside{
-  background-color: inherit;
-border:none;
-}
-.menu-container {
-  position: relative; 
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-  width: 60px;
-  margin-top: 5px;
-}
-  .menu {
-    width:115px;
-    height:65px;
-    list-style: none;
-    padding: 0;
-    display: none;
-    position: absolute; 
-    top: -20%; 
-    left: 70%;
-    background-color: #fff;
-    box-shadow:  0px 5px 10px rgba(0, 0, 0, 0.3) ,
-    0px -5px 10px rgba(0, 0, 0, 0.3) ;
-    border-radius: 10px;
-}
-.menu a{
-  font-size: 15px;
-}
-.fa-ul li:first-child{
-  border-bottom: 1px solid gray;
-}
-/* Add this CSS to your stylesheet */
-
-
-
-/* .menu-button:focus + .menu {
-  display: flex;
-  flex-direction: column;
- place-content: center;
-} */
-.menu li {
- 
-  display: flex;
- 
-}
-.menu li i {
-  margin: 5px;
-  transform: scale(.65); 
- 
-}
-.menu li a {
-  text-decoration: none;
-  color: #333;
-  display: block;
-  padding: 5px 10px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-}
-
-
-  .item-label {
-    margin: 0; 
-    padding: 0;
-    align-self: flex-start;
-    gap: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    flex-grow: 1;
-}
 .input-field{
   border-radius: 6px;
   border: 1px solid #8e8e8e;
-
- 
 
 }
 
 .placeholder span {
   font-family: FontAwesome;
 }
-
-.item-check:checked + .item-label {
-  
-  text-decoration:line-through;
-}
-.icon {
- 
-  transform: translateY(-50%);
-  font-size: 20px; /* Adjust the icon size as needed */
-  color: #007bff; /* Customize the icon color as needed */
-  pointer-events: none; /* Allow clicking through the icon */
-}
-
-
 .input-placeholder input {
   padding: 10px;
   
@@ -309,6 +77,176 @@ border:none;
   font-family: FontAwesome;
 }
 
+
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"]:checked + label {
+ 
+  color:#007bff; 
+}
+
+
+input[type="radio"]:checked ~ .tab-content {
+  display: block;
+}
+
+
+.tab:has(input[type="radio"]:checked)  {
+ 
+ 
+  border-bottom: 2px solid #007bff;
+  
+}
+
+
+.tab-content {
+  display: none;
+}
+.tab{
+  padding: 3%;
+  padding-bottom: 1%;
+  margin :0%;
+  
+
+  
+ 
+  
+}
+
+.tex{
+  display: flex;
+  align-items: center;
+}
+.delete{
+  margin-top: 5px;;
+  margin-right: 5px;;
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  border-radius: 6px;
+  margin-inline-start: auto;
+  background: linear-gradient(90deg, #007bff 60%, #0056b3);
+}
+
+
+
+
+
+
+/* Style the task list section */
+.list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+
+
+
+/*style the head section */
+
+.head {
+  
+  display :flex;
+    overflow: hidden;
+   margin-left: 2%;
+    padding: 10px;
+   
+    background-color: inherit;
+    border-bottom: 2px solid #ccc; ;
+  }
+ 
+
+  /* Style the buttons that are used to open the tab content */
+  .head button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: 0.3s;
+    height: min-content;
+    width:fit-content;
+  }
+  .head button:hover {
+    background-color: #ddd;
+  }
+  .head button:focus {
+    color :darkcyan;
+    text-decoration: underline;
+  }
+  .head button.delete {
+    color :#e0e0e0;
+    
+  }
+
+
+/*list items style */
+
+  .items{
+    display:grid;
+    
+  }
+  .item{
+    display :flex;
+    align-items: flex-start; 
+    gap: 10px; 
+   
+    border-bottom: 2px solid #ccc;  
+    padding-top: 5%; 
+    padding-bottom: 5%; 
+    padding-right: 20px;
+  }
+  
+.item-check {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    width:20px;
+   
+      transform: scale(1.2); 
+     margin-left:5px;
+ 
+    
+}
+.custom-list{
+  list-style: none;
+}
+
+.item-label {
+  margin: 0; 
+  padding: 0;
+  align-self: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+
+.item-check:checked + .item-label {
+  
+  text-decoration:line-through;
+}
+
+.icon {
+ 
+  transform: translateY(-50%);
+  font-size: 20px; 
+  color: #007bff; 
+  pointer-events: none; 
+}
+
+
+
+
 .task-item {
     display: flex;
     align-items: center;
@@ -329,7 +267,75 @@ border:none;
 .inside {
   cursor: pointer;
 }
-/* Optional hover effect for task items */
+
 .task-item:hover {
     background-color: #e0e0e0;
 }
+
+
+/*style the menu section with all cases */
+
+.menu-button{
+background-color: inherit;
+border:none;
+}
+.inside{
+  background-color: inherit;
+border:none;
+}
+.menu-container {
+  position: relative; 
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+  width: 60px;
+  margin-top: 5px;
+}
+
+.menu {
+    width:115px;
+    height:65px;
+    list-style: none;
+    padding: 0;
+    display: none;
+    position: absolute; 
+    top: -20%; 
+    left: 70%;
+    background-color: #fff;
+    box-shadow:  0px 5px 10px rgba(0, 0, 0, 0.3) ,
+    0px -5px 10px rgba(0, 0, 0, 0.3) ;
+    border-radius: 10px;
+}
+.menu a{
+  font-size: 15px;
+}
+.fa-ul li:first-child{
+  border-bottom: 1px solid gray;
+}
+
+.menu li {
+ 
+  display: flex;
+ 
+}
+.menu li i {
+  margin: 5px;
+  transform: scale(.65); 
+ 
+}
+.menu li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+
+
+
+
+
+
+
