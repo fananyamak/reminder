@@ -80,7 +80,10 @@ menuButtons.forEach((button) => {
         menu.style.placeContent = 'center';
     });
 });
-
+ 
+function showmenu(){
+    
+}
 
 
 //change the task value
