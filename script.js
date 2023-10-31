@@ -222,3 +222,24 @@ const mouseUpHandler = function () {
     window.location.reload();
 };
 
+//hide menu when press outside container 
+
+const menuContainers = document.querySelectorAll('.menu-container');
+const menus = document.querySelectorAll('.menu');
+
+document.addEventListener('click', function (event) {
+    menuContainers.forEach((menuContainer, index) => {
+        if (!menuContainer.contains(event.target)) {
+            menus[index].style.display = "none";
+        }
+    });
+});
+        
+       
+
+
+
+
+
+
+
