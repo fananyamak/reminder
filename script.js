@@ -1,6 +1,179 @@
 
 
-//adding new tasks 
+ 
+ let emplist=0;
+
+ const emptydiv = document.querySelector(".empty");
+ const elempp=emptydiv.parentNode;
+ //used in any change 
+ function updateLocalStorageOrder() {
+    
+    
+    localStorage.clear();
+    const items = document.querySelectorAll(".fa-ul > li");
+    const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
+    emplist=updatedOrder.length;
+    console.log(emplist);
+    
+    
+    if (emplist == 0) {
+        
+        emptydiv.style.display = "block"; // Set display property to "block"
+        elempp.append(emptydiv);
+    } else {
+        emptydiv.style.display = "none"; // Set display property to "none"
+        
+    }
+    
+    localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
+    
+
+    updatedOrder.forEach((value, index) => {
+        localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
+});
+    
+    
+}
+
+
+
+function loadItemsFromLocalStorage() {
+
+    
+    
+
+const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
+
+
+
+
+if (itemOrder) {
+    if(itemOrder.length==0){
+        emptydiv.style.display = "block";
+    }
+    else{
+    
+    emptydiv.style.display = "none";
+
+itemOrder.forEach((key) => {
+
+const storedValue = localStorage.getItem(key);
+    if (storedValue !== null) {
+       
+       buildliitem(key);
+    }
+});
+}
+}
+
+}
+document.addEventListener("DOMContentLoaded", loadItemsFromLocalStorage);
+
+
+function clearlist(){
+var userConfirmed = window.confirm("Are you sure you want to delete all tasks?");
+
+if (userConfirmed) {
+
+
+    const mainlist = document.getElementsByClassName("fa-ul")[0];
+    localStorage.clear();
+    while (mainlist.firstChild) {
+         mainlist.removeChild(mainlist.firstChild);
+    }
+    updateLocalStorageOrder();
+
+}    
+    
+}   
+
+
+
+//not used 
+function buildlist(){
+console.log("hibuild");
+updateLocalStorageOrder();
+
+}
+
+
+
+function buildliitem(value){
+    
+   
+const labelValue = value;
+const storedValue = localStorage.getItem(labelValue);
+const mainlist = document.getElementsByClassName("fa-ul")[0];
+const li = document.createElement("li");
+
+
+li.innerHTML = `
+<section class="item">
+    <span class="fa-li"><i class="fas fa-grip-vertical" draggable="true" style="cursor: pointer;"></i></span>
+    <input type="checkbox" id="${labelValue}" class="item-check">
+<label for="${labelValue}" class="item-label">${labelValue}</label>
+    <div class="menu-container">
+        <button class="icon-button menu-button">
+            <i class="fas fa-ellipsis-h" ></i>
+        </button>
+        <ul class="menu" >
+            <li class="comp"><i class="fa fa-check"></i> <button class="inside" >Complete</button></li>
+            <li class="del"><i class="fas fa-trash "></i> <button class="inside ">Delete</button></li>
+        </ul>
+    </div>
+    
+</section>
+`;
+const checkbox = li.querySelector(".item-check");
+if (storedValue === "true") {
+checkbox.checked = true;
+}
+
+mainlist.appendChild(li);
+
+
+}
+
+
+
+//used when change the tab
+
+function filterItems(filter) {
+    let count=0;
+const items = document.querySelectorAll(".fa-ul > li");
+
+items.forEach((item) => {
+
+const checkbox = item.querySelector(".item-check");
+
+const labelValue = checkbox.id;
+
+const storedValue = localStorage.getItem(labelValue);
+
+if (filter === "all" || (filter === "completed" && storedValue === "true") || (filter === "pending" && storedValue === "false")) {
+    item.style.display = "list-item";
+    count++;
+   
+} else {
+
+    item.style.display = "none";
+   
+}
+});
+if(count==0){
+    
+        
+        emptydiv.style.display = "block"; // Set display property to "block"
+        elempp.append(emptydiv);
+   
+}
+else{
+    emptydiv.style.display = "none"; 
+
+}
+}
+
+
 
 
 const node = document.getElementsByClassName("input-text")[0];
@@ -15,6 +188,17 @@ node.addEventListener("keyup", function(event) {
                 node.value="";   
     }
 });
+
+// const inputText = document.querySelector('.input-text');
+// const addButton = document.querySelector('.add-button');
+
+// inputText.addEventListener('input', function() {
+//   if (inputText.value.trim() !== '') {
+//     addButton.style.display = 'inline-block';
+//   } else {
+//     addButton.style.display = 'none';
+//   }
+// });
 
 
 
@@ -46,6 +230,10 @@ document.getElementById("item-list").addEventListener("click", function (event) 
 
        
         if (target.textContent === "Delete") {
+            var userConfirmed = window.confirm("Are you sure you want to delete this task?");
+
+        if (userConfirmed) {
+            
             const labelElement = listItem.querySelector(".item-label");
             const labelValue = labelElement.textContent;
 
@@ -67,6 +255,8 @@ document.getElementById("item-list").addEventListener("click", function (event) 
         const menu = target.closest('.item').querySelector('.menu');
         menu.style.display = "none"; // hide the menu after pressing and handling
     }
+    
+    }
 });
 
 
@@ -78,17 +268,14 @@ const menuContainer = document.getElementById('item-list');
 menuContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('fa-ellipsis-h')) {
 
-// const menuButtons = document.querySelectorAll('.menu-button');
-// menuButtons.forEach((button) => {
-//     button.addEventListener('click', function() {
+
     const targetparent = event.target.parentNode;
        
         const menu = targetparent.nextElementSibling; 
         menu.style.display = 'flex';
         menu.style.flexDirection = 'column';
         menu.style.placeContent = 'center';
-//     });
-// });
+
     }});
  
 function showmenu(){
@@ -235,18 +422,7 @@ const mouseUpHandler = function () {
     window.location.reload();
 };
 
-//hide menu when press outside container 
 
-// const menuContainers = document.querySelectorAll('.menu-container');
-// const menus = document.querySelectorAll('.menu');
-
-// document.addEventListener('click', function (event) {
-//     menuContainers.forEach((menuContainer, index) => {
-//         if (!menuContainer.contains(event.target)) {
-//             menus[index].style.display = "none";
-//         }
-//     });
-// });
 
 document.addEventListener('click', function(event) {
     const menuContainer = event.target.closest('.menu-container');

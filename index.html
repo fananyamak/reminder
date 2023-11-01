@@ -2,144 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="To Do List">
+    <meta name="description" content="Reminder to your task">
+    <meta property="og:image" content="">
+    <meta property="og:image:alt" content="Your task list ">
+    <meta property="og:description" content="Description For Reminder">
     <script src="https://kit.fontawesome.com/3dbdf65c77.js" crossorigin="anonymous"></script>
    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:400,700">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@1,500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Coda&family=Darker+Grotesque&family=Edu+TAS+Beginner&family=Roboto+Mono:ital,wght@1,200&family=Roboto:wght@300&family=Shadows+Into+Light&family=Ysabeau+Infant:wght@300&display=swap" rel="stylesheet">
+   
     <title>Task Reminder</title>
 </head>
 <body>
 
 
-    <script>
-        
-        //used in any change 
-        function updateLocalStorageOrder() {
-            localStorage.clear();
-            const items = document.querySelectorAll(".fa-ul > li");
-            const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
-
-            localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
-
-            updatedOrder.forEach((value, index) => {
-                localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
-    });
-}
-
-
-
-function loadItemsFromLocalStorage() {
-  
-    
-    const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
-
-    if (itemOrder) {
-       
-        itemOrder.forEach((key) => {
-
-        const storedValue = localStorage.getItem(key);
-            if (storedValue !== null) {
-               buildliitem(key);
-            }
-        });
-    }
-}
-
-
-    function clearlist(){
-            const mainlist = document.getElementsByClassName("fa-ul")[0];
-            localStorage.clear();
-            while (mainlist.firstChild) {
-                 mainlist.removeChild(mainlist.firstChild);
-            }
-            updateLocalStorageOrder();
-
-          
-            
-    }   
-
-
-
-//not used 
-function buildlist(){
-    console.log("hibuild");
-    updateLocalStorageOrder();
-   
-}
-
-
-
-function buildliitem(value){
-    const labelValue = value;
-    const storedValue = localStorage.getItem(labelValue);
-    const mainlist = document.getElementsByClassName("fa-ul")[0];
-    const li = document.createElement("li");
-    
-      
-    li.innerHTML = `
-        <section class="item">
-            <span class="fa-li"><i class="fas fa-grip-vertical" draggable="true" style="cursor: pointer;"></i></span>
-            <input type="checkbox" id="${labelValue}" class="item-check">
-        <label for="${labelValue}" class="item-label">${labelValue}</label>
-            <div class="menu-container">
-                <button class="icon-button menu-button">
-                    <i class="fas fa-ellipsis-h" ></i>
-                </button>
-                <ul class="menu" >
-                    <li><i class="fa fa-check"></i> <button class="inside" >Complete</button></li>
-                    <li><i class="fas fa-trash"></i> <button class="inside">Delete</button></li>
-                </ul>
-            </div>
-            
-        </section>
-    `;
-    const checkbox = li.querySelector(".item-check");
-if (storedValue === "true") {
-    checkbox.checked = true;
-}
-
-    mainlist.appendChild(li);
-   
-
-}
-
-
-
-//used when change the tab
-
-function filterItems(filter) {
-    const items = document.querySelectorAll(".fa-ul > li");
-    
-    items.forEach((item) => {
-        
-        const checkbox = item.querySelector(".item-check");
-       
-        const labelValue = checkbox.id;
-       
-        const storedValue = localStorage.getItem(labelValue);
-        
-        if (filter === "all" || (filter === "completed" && storedValue === "true") || (filter === "pending" && storedValue === "false")) {
-            item.style.display = "list-item";
-           
-        } else {
-            item.style.display = "none";
-           
-        }
-    });
-}
-
-filterItems("All"); // initial case 
-
-    </script>
+    <main class="master">
     <div class="container">
-      
-        <main>
+      <header>
+        
             
                 <div class="input-placeholder">
                     <input type="text" class="input-text" required >
                     <div class="placeholder">
                         <span>&#xf550;</span>&nbsp; Add a new task
+                        <!-- <button class="add-button">Add</button> -->
                     </div>
+                    
                 </div>
                
            
@@ -164,27 +67,31 @@ filterItems("All"); // initial case
                         <button class="tab delete" onclick="clearlist()">Clear All</button>
 
                  </div>
-                
+                </header>
+                 <main>
+                    <div class="content">
                    
                 <div class ="items">
                     <ul class="fa-ul" id="item-list">
+                        <div class="empty" style="display: block;">
+                            There is no task yet...
+                        </div>
                        
-                   <script>
-                            
-                      loadItemsFromLocalStorage() ;
-   
-                    </script>
-                        
+            
                     </ul>
                 </div>
                 
              
             </section>
+        </div>
         </main>
+        <footer>
+            <div class="bottom"></div>
+        </footer>
     </div>
-
-    <script type="text/javascript" src="script.js"></script>
-
+</main>
+    
+<script  src="script.js"></script>
     
 
 </body>

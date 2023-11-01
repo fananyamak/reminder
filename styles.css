@@ -5,11 +5,41 @@
     box-sizing: border-box;
 }
 
+body{
+  
+    background-color: #5bb0ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div{
+  display: block;
+}
+
+.master{
+  
+     
+    
+    border-radius: 20px;
+    height: 500px;
+    width:60%; 
+    margin-top: 10px;
+    padding: 0px; 
+  
+}
+.content {
+  padding: 1rem 1.5rem 0 1.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
 /* apply styles to the app container */
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    background: white;
+    margin-top: 0 auto;
+    padding: 10px;
+    border-radius: 20px;
+    -webkit-box-shadow: 15px 20px 25px -13px rgba(0,0,0,0.41);
 }
 
 
@@ -29,11 +59,18 @@
 .input-text{
   width: 100%;
 }
+.input-text:focus{
+  outline:2px solid #5bb0ff ; 
+}
 .input-placeholder input {
   width: 97%;
     padding: 3%;
     height:40px;
 }
+.item-label:hover {
+  background-color: gray;
+}
+
 
 .input-field{
   border-radius: 6px;
@@ -50,8 +87,14 @@
   border-radius: 6px;
   border: 1px solid #8e8e8e;
 }
+
+
 .input-placeholder input:valid + .placeholder {
   display: none;
+}
+
+.master{
+  font-family: 'Caveat Brush', cursive;
 }
 
 .placeholder {
@@ -76,7 +119,16 @@
   color: #8e8e8e;
   font-family: FontAwesome;
 }
+.input-container {
+  position: relative;
+}
 
+/* .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+} */
 
 input[type="radio"] {
   display: none;
@@ -84,6 +136,12 @@ input[type="radio"] {
 input[type="radio"]:checked + label {
  
   color:#007bff; 
+  font-weight: bold;
+}
+input[type="radio"]:hover + label {
+ 
+  color:#72b2f6; 
+  
 }
 
 
@@ -98,6 +156,13 @@ input[type="radio"]:checked ~ .tab-content {
   border-bottom: 2px solid #007bff;
   
 }
+.tab:has(input[type="radio"]:hover)  {
+ 
+  cursor: pointer;
+  transition: color .3s ;
+  
+}
+
 
 
 .tab-content {
@@ -107,6 +172,7 @@ input[type="radio"]:checked ~ .tab-content {
   padding: 3%;
   padding-bottom: 1%;
   margin :0%;
+  font-size: 1rem;
   
 
   
@@ -124,14 +190,26 @@ input[type="radio"]:checked ~ .tab-content {
   display: flex;
   align-items: center;
   font-family: Arial, sans-serif;
-  font-size: 20px;
-  border-radius: 6px;
+  font-size: 1rem;
+  border-radius: .25rem;
   margin-inline-start: auto;
-  background: linear-gradient(90deg, #007bff 60%, #0056b3);
+  background: linear-gradient(90deg, #56a6fb 50%, #206cbe);
+}
+.tab.delete:hover {
+  opacity: 0.8;
+  transition: .2s;
 }
 
 
-
+.empty{
+  
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  
+}
 
 
 
@@ -157,7 +235,7 @@ input[type="radio"]:checked ~ .tab-content {
     padding: 10px;
    
     background-color: inherit;
-    border-bottom: 2px solid #ccc; ;
+    border-bottom: 1px solid #ccc; ;
   }
  
 
@@ -178,12 +256,13 @@ input[type="radio"]:checked ~ .tab-content {
   }
   .head button:focus {
     color :darkcyan;
-    text-decoration: underline;
+   
   }
   .head button.delete {
     color :#e0e0e0;
     
   }
+ 
 
 
 /*list items style */
@@ -197,7 +276,7 @@ input[type="radio"]:checked ~ .tab-content {
     align-items: flex-start; 
     gap: 10px; 
    
-    border-bottom: 2px solid #ccc;  
+    border-bottom: 1px solid #ccc;  
     padding-top: 5%; 
     padding-bottom: 5%; 
     padding-right: 20px;
@@ -216,6 +295,7 @@ input[type="radio"]:checked ~ .tab-content {
  
     
 }
+
 .custom-list{
   list-style: none;
 }
@@ -264,6 +344,7 @@ input[type="radio"]:checked ~ .tab-content {
     cursor: pointer;
 }
 
+
 .inside {
   cursor: pointer;
 }
@@ -278,11 +359,37 @@ input[type="radio"]:checked ~ .tab-content {
 .menu-button{
 background-color: inherit;
 border:none;
+cursor: pointer;
+}
+
+
+
+.menu-button:hover i{
+  background-color: rgba(196, 192, 192, 0.915); 
+  
+    border-radius: 40%;
+}
+.menu > li > button {
+
+  transition: 0.25s linear;
+  -webkit-transition: 0.25s linear;
+  
+  
 }
 .inside{
   background-color: inherit;
 border:none;
 }
+.comp:hover i.fa-check,
+.comp:hover button.inside {
+  color: green;
+}
+
+.del:hover i.fa-trash,
+.del:hover button.inside {
+  color: red;
+}
+
 .menu-container {
   position: relative; 
   display: flex;
@@ -309,6 +416,17 @@ border:none;
 .menu a{
   font-size: 15px;
 }
+.fa-ul {
+  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
 .fa-ul li:first-child{
   border-bottom: 1px solid gray;
 }
@@ -330,6 +448,13 @@ border:none;
   padding: 5px 10px;
   background-color: #f0f0f0;
   border-radius: 5px;
+}
+
+footer {
+  display: block;
+}
+.bottom{
+  height: 2rem;
 }
 
 
