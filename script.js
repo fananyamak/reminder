@@ -415,7 +415,7 @@ const mouseUpHandler = function () {
 document.addEventListener('click', function (event) {
     const menuContainer = event.target.closest('.menu-container');
     const allMenus = document.querySelectorAll('.menu');
-    
+
 
 
     if (!menuContainer) {
@@ -423,43 +423,47 @@ document.addEventListener('click', function (event) {
             menu.style.display = 'none';
         });
     }
-    else{
+    else {
         if (event.target.classList.contains('fa-ellipsis-h')) {
             const targetParent = event.target.parentNode;
             allMenus.forEach(menu => {
                 menu.style.display = 'none';
             });
 
-        const menu = targetParent.nextElementSibling;
-        menu.style.display = 'flex';
-        menu.style.flexDirection = 'column';
-        menu.style.placeContent = 'center';
-        menu.classList.toggle('open');
+            const menu = targetParent.nextElementSibling;
+            menu.style.display = 'flex';
+            menu.style.flexDirection = 'column';
+            menu.style.placeContent = 'center';
+            menu.classList.toggle('open');
         }
     }
 });
 
-// //change the menu visibility 
+const inputField = document.querySelector(".input-text");
+const addbtn = document.querySelector(".add");
 
-// const menuContainer = document.getElementById('item-list');
-// const menuContainers = document.querySelector('.menu-container');
-// const allMenus = document.querySelectorAll('.menu');
+inputField.addEventListener('keyup', () => {
+    addbtn.style.display = 'block';
+    if (inputField.value == '') {
+        addbtn.style.display = 'none';
+    }
+});
 
-       
+addbtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!inputField.value) {
+        return;
+    }
 
-// menuContainer.addEventListener('click', function (event) {
-   
-    
-//         
-//         alert(allMenus.length);
-//         // Close other open menus
-//         allMenus.forEach(menu => {
-//             menu.style.display = 'none';
-//         });
+    const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
+    itemOrder.push(node.value);
+    console.log(itemOrder);
+    buildliitem(node.value);
+    updateLocalStorageOrder();
+    node.value = "";
+    addbtn.style.display = 'none';
+});
 
-       
-//     }
-// });
 
 
 

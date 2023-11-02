@@ -134,12 +134,23 @@ div {
   position: relative;
 }
 
-/* .add-button {
+.add {
+  margin-inline-start: auto;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 15px;
+  top: 3px;
   display: none;
-} */
+  padding: .4rem;
+  background: linear-gradient(90deg, #56a6fb 50%, #206cbe);
+  border-radius: .25rem;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  color: white;
+  animation: slideIn .2s ease;
+  outline: none;
+  border: none;
+}
+
 
 input[type="radio"] {
   display: none;
@@ -434,7 +445,7 @@ input[type="radio"]:checked~.tab-content {
   display: none;
   position: absolute;
   top: -20%;
-  left:100%;
+  left: 100%;
   background-color: #fff;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3),
     0px -5px 10px rgba(0, 0, 0, 0.3);
@@ -458,15 +469,17 @@ input[type="radio"]:checked~.tab-content {
 
 @keyframes slideIn {
   0% {
-      
-      opacity: 0;
+
+    opacity: 0;
   }
+
   100% {
-      
-      opacity: 1;
+
+    opacity: 1;
   }
 }
-.menu li:first-child{
+
+.menu li:first-child {
   border-bottom: 1px solid #ccc;
 }
 
