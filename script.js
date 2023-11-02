@@ -6,67 +6,74 @@ let emplist = 0;
 const emptydiv = document.querySelector(".empty");
 const elempp = emptydiv.parentNode;
 //used in any change 
+
+let myTask = {
+    value: "",
+    check: ""
+};
+
 function updateLocalStorageOrder() {
-
-
     localStorage.clear();
     const items = document.querySelectorAll(".fa-ul > li");
-    const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
+    const updatedOrder = Array.from(items).map((item) => {
+        const label = item.querySelector('.item-label').textContent;
+        const isChecked = item.querySelector('.item-check').checked;
+        return {
+            value: label,
+            check: isChecked
+        };
+    });
     emplist = updatedOrder.length;
     console.log(emplist);
-
+    console.log(updatedOrder);
 
     if (emplist == 0) {
-
         emptydiv.style.display = "block"; // Set display property to "block"
         elempp.append(emptydiv);
     } else {
         emptydiv.style.display = "none"; // Set display property to "none"
-
     }
 
     localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
 
-
-    updatedOrder.forEach((value, index) => {
-        localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
+    updatedOrder.forEach((task) => {
+        localStorage.setItem(task.value, task.check.toString());
     });
-
-
 }
+
+
+
 
 
 
 function loadItemsFromLocalStorage() {
-
-
-
-
     const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
-
-
-
+    console.log("itemOrder");
+    console.log(itemOrder);
 
     if (itemOrder) {
-        if (itemOrder.length == 0) {
+        if (itemOrder.length === 0) {
             emptydiv.style.display = "block";
-        }
-        else {
-
+        } else {
             emptydiv.style.display = "none";
 
-            itemOrder.forEach((key) => {
-
-                const storedValue = localStorage.getItem(key);
-                if (storedValue !== null) {
-
-                    buildliitem(key);
+            itemOrder.forEach((task) => {
+                const storedValue = localStorage.getItem(task.value);
+                if (task.value !== null) {
+                    buildliitem(task);
+                    
                 }
             });
         }
     }
-
 }
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", loadItemsFromLocalStorage);
 
 
@@ -89,50 +96,37 @@ function clearlist() {
 
 
 
-//not used 
-function buildlist() {
-    console.log("hibuild");
-    updateLocalStorageOrder();
-
-}
 
 
 
-function buildliitem(value) {
-
-
-    const labelValue = value;
+function buildliitem(task) {
+    const labelValue = task.value;
     const storedValue = localStorage.getItem(labelValue);
     const mainlist = document.getElementsByClassName("fa-ul")[0];
     const li = document.createElement("li");
     li.classList.add("eachitem");
 
-
     li.innerHTML = `
-<section class="item">
-    <span class="fa-li"><i class="fas fa-grip-vertical" draggable="true" style="cursor: pointer;"></i></span>
-    <input type="checkbox" id="${labelValue}" class="item-check">
-<label for="${labelValue}" class="item-label">${labelValue}</label>
-    <div class="menu-container">
-        <button class="icon-button menu-button">
-            <i class="fas fa-ellipsis-h" ></i>
-        </button>
-        <ul class="menu"  >
-            <li class="comp"><i class="fa fa-check"></i> <button class="inside" >Complete</button></li>
-            <li class="del"><i class="fas fa-trash "></i> <button class="inside ">Delete</button></li>
-        </ul>
-    </div>
+        <section class="item">
+            <span class="fa-li"><i class="fas fa-grip-vertical" draggable="true" style="cursor: pointer;"></i></span>
+            <input type="checkbox" id="${labelValue}" class="item-check">
+            <label for="${labelValue}" class="item-label">${labelValue}</label>
+            <div class="menu-container">
+                <button class="icon-button menu-button">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <ul class="menu">
+                    <li class="comp"><i class="fa fa-check"></i> <button class="inside">Complete</button></li>
+                    <li class="del"><i class="fas fa-trash"></i> <button class="inside">Delete</button></li>
+                </ul>
+            </div>
+        </section>
+    `;
     
-</section>
-`;
     const checkbox = li.querySelector(".item-check");
-    if (storedValue === "true") {
-        checkbox.checked = true;
-    }
+    checkbox.checked = task.check === true;
 
     mainlist.appendChild(li);
-
-
 }
 
 
@@ -149,7 +143,9 @@ function filterItems(filter) {
 
         const labelValue = checkbox.id;
 
-        const storedValue = localStorage.getItem(labelValue);
+        //const storedValue = localStorage.getItem(labelValue);
+        const storedValue = checkbox.checked.toString();
+        console.log(storedValue === "true");
 
         if (filter === "all" || (filter === "completed" && storedValue === "true") || (filter === "pending" && storedValue === "false")) {
             item.style.display = "list-item";
@@ -176,30 +172,22 @@ function filterItems(filter) {
 
 
 
-
 const node = document.getElementsByClassName("input-text")[0];
 node.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
-
         const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
-        itemOrder.push(node.value);
+        const newItem = {
+            value: node.value,
+            check: false // Default value for a new item
+        };
+        itemOrder.push(newItem);
         console.log(itemOrder);
-        buildliitem(node.value);
+        buildliitem(newItem);
         updateLocalStorageOrder();
         node.value = "";
     }
 });
 
-// const inputText = document.querySelector('.input-text');
-// const addButton = document.querySelector('.add-button');
-
-// inputText.addEventListener('input', function() {
-//   if (inputText.value.trim() !== '') {
-//     addButton.style.display = 'inline-block';
-//   } else {
-//     addButton.style.display = 'none';
-//   }
-// });
 
 
 
@@ -324,7 +312,7 @@ const swap = function (first, sec) {
 
 
 list.addEventListener("mousedown", (e) => {
-    console.log(e.target.tagName);
+   
     if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
         draggingEle = e.target.closest("li");
 
@@ -456,12 +444,15 @@ addbtn.addEventListener('click', (e) => {
     }
 
     const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
-    itemOrder.push(node.value);
+    const newItem = {
+        value: node.value,
+        check: false // Default value for a new item
+    };
+    itemOrder.push(newItem);
     console.log(itemOrder);
-    buildliitem(node.value);
+    buildliitem(newItem);
     updateLocalStorageOrder();
     node.value = "";
-    addbtn.style.display = 'none';
 });
 
 
