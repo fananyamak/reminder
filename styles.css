@@ -136,9 +136,9 @@ div {
 
 .add {
   margin-inline-start: auto;
-  position: relative;
-  right: 4rem;
-  top: 0px;
+  position: absolute;
+  right: 1.5rem;
+  top: 2.5px;
   display: none;
   padding: .4rem;
   background: linear-gradient(90deg, #56a6fb 50%, #206cbe);
