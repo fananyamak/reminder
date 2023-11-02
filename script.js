@@ -1,113 +1,114 @@
 
 
- 
- let emplist=0;
 
- const emptydiv = document.querySelector(".empty");
- const elempp=emptydiv.parentNode;
- //used in any change 
- function updateLocalStorageOrder() {
-    
-    
+let emplist = 0;
+
+const emptydiv = document.querySelector(".empty");
+const elempp = emptydiv.parentNode;
+//used in any change 
+function updateLocalStorageOrder() {
+
+
     localStorage.clear();
     const items = document.querySelectorAll(".fa-ul > li");
     const updatedOrder = Array.from(items).map((item) => item.querySelector('.item-label').textContent);
-    emplist=updatedOrder.length;
+    emplist = updatedOrder.length;
     console.log(emplist);
-    
-    
+
+
     if (emplist == 0) {
-        
+
         emptydiv.style.display = "block"; // Set display property to "block"
         elempp.append(emptydiv);
     } else {
         emptydiv.style.display = "none"; // Set display property to "none"
-        
+
     }
-    
+
     localStorage.setItem("itemOrder", JSON.stringify(updatedOrder));
-    
+
 
     updatedOrder.forEach((value, index) => {
         localStorage.setItem(value, items[index].querySelector('.item-check').checked.toString());
-});
-    
-    
+    });
+
+
 }
 
 
 
 function loadItemsFromLocalStorage() {
 
-    
-    
-
-const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
 
 
 
+    const itemOrder = JSON.parse(localStorage.getItem("itemOrder"));
 
-if (itemOrder) {
-    if(itemOrder.length==0){
-        emptydiv.style.display = "block";
+
+
+
+    if (itemOrder) {
+        if (itemOrder.length == 0) {
+            emptydiv.style.display = "block";
+        }
+        else {
+
+            emptydiv.style.display = "none";
+
+            itemOrder.forEach((key) => {
+
+                const storedValue = localStorage.getItem(key);
+                if (storedValue !== null) {
+
+                    buildliitem(key);
+                }
+            });
+        }
     }
-    else{
-    
-    emptydiv.style.display = "none";
-
-itemOrder.forEach((key) => {
-
-const storedValue = localStorage.getItem(key);
-    if (storedValue !== null) {
-       
-       buildliitem(key);
-    }
-});
-}
-}
 
 }
 document.addEventListener("DOMContentLoaded", loadItemsFromLocalStorage);
 
 
-function clearlist(){
-var userConfirmed = window.confirm("Are you sure you want to delete all tasks?");
+function clearlist() {
+    var userConfirmed = window.confirm("Are you sure you want to delete all tasks?");
 
-if (userConfirmed) {
+    if (userConfirmed) {
 
 
-    const mainlist = document.getElementsByClassName("fa-ul")[0];
-    localStorage.clear();
-    while (mainlist.firstChild) {
-         mainlist.removeChild(mainlist.firstChild);
+        const mainlist = document.getElementsByClassName("fa-ul")[0];
+        localStorage.clear();
+        while (mainlist.firstChild) {
+            mainlist.removeChild(mainlist.firstChild);
+        }
+        updateLocalStorageOrder();
+
     }
-    updateLocalStorageOrder();
-
-}    
-    
-}   
-
-
-
-//not used 
-function buildlist(){
-console.log("hibuild");
-updateLocalStorageOrder();
 
 }
 
 
 
-function buildliitem(value){
-    
-   
-const labelValue = value;
-const storedValue = localStorage.getItem(labelValue);
-const mainlist = document.getElementsByClassName("fa-ul")[0];
-const li = document.createElement("li");
+//not used 
+function buildlist() {
+    console.log("hibuild");
+    updateLocalStorageOrder();
+
+}
 
 
-li.innerHTML = `
+
+function buildliitem(value) {
+
+
+    const labelValue = value;
+    const storedValue = localStorage.getItem(labelValue);
+    const mainlist = document.getElementsByClassName("fa-ul")[0];
+    const li = document.createElement("li");
+    li.classList.add("eachitem");
+
+
+    li.innerHTML = `
 <section class="item">
     <span class="fa-li"><i class="fas fa-grip-vertical" draggable="true" style="cursor: pointer;"></i></span>
     <input type="checkbox" id="${labelValue}" class="item-check">
@@ -116,7 +117,7 @@ li.innerHTML = `
         <button class="icon-button menu-button">
             <i class="fas fa-ellipsis-h" ></i>
         </button>
-        <ul class="menu" >
+        <ul class="menu"  >
             <li class="comp"><i class="fa fa-check"></i> <button class="inside" >Complete</button></li>
             <li class="del"><i class="fas fa-trash "></i> <button class="inside ">Delete</button></li>
         </ul>
@@ -124,12 +125,12 @@ li.innerHTML = `
     
 </section>
 `;
-const checkbox = li.querySelector(".item-check");
-if (storedValue === "true") {
-checkbox.checked = true;
-}
+    const checkbox = li.querySelector(".item-check");
+    if (storedValue === "true") {
+        checkbox.checked = true;
+    }
 
-mainlist.appendChild(li);
+    mainlist.appendChild(li);
 
 
 }
@@ -139,53 +140,53 @@ mainlist.appendChild(li);
 //used when change the tab
 
 function filterItems(filter) {
-    let count=0;
-const items = document.querySelectorAll(".fa-ul > li");
+    let count = 0;
+    const items = document.querySelectorAll(".fa-ul > li");
 
-items.forEach((item) => {
+    items.forEach((item) => {
 
-const checkbox = item.querySelector(".item-check");
+        const checkbox = item.querySelector(".item-check");
 
-const labelValue = checkbox.id;
+        const labelValue = checkbox.id;
 
-const storedValue = localStorage.getItem(labelValue);
+        const storedValue = localStorage.getItem(labelValue);
 
-if (filter === "all" || (filter === "completed" && storedValue === "true") || (filter === "pending" && storedValue === "false")) {
-    item.style.display = "list-item";
-    count++;
-   
-} else {
+        if (filter === "all" || (filter === "completed" && storedValue === "true") || (filter === "pending" && storedValue === "false")) {
+            item.style.display = "list-item";
+            count++;
 
-    item.style.display = "none";
-   
-}
-});
-if(count==0){
-    
-        
+        } else {
+
+            item.style.display = "none";
+
+        }
+    });
+    if (count == 0) {
+
+
         emptydiv.style.display = "block"; // Set display property to "block"
         elempp.append(emptydiv);
-   
-}
-else{
-    emptydiv.style.display = "none"; 
 
-}
+    }
+    else {
+        emptydiv.style.display = "none";
+
+    }
 }
 
 
 
 
 const node = document.getElementsByClassName("input-text")[0];
-node.addEventListener("keyup", function(event) {
+node.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
-      
-       const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
-       itemOrder.push(node.value);
-       console.log(itemOrder);
+
+        const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
+        itemOrder.push(node.value);
+        console.log(itemOrder);
         buildliitem(node.value);
         updateLocalStorageOrder();
-                node.value="";   
+        node.value = "";
     }
 });
 
@@ -206,80 +207,66 @@ node.addEventListener("keyup", function(event) {
 //handling menu buttons
 
 document.getElementById("item-list").addEventListener("click", function (event) {
-    
+
     const target = event.target;
 
     //chick if one of menu buttons pressed
 
     if (target.classList.contains("inside")) {
-        
+
         const listItem = target.closest("section");
         if (!listItem) return;
         const checkbox = listItem.querySelector(".item-check");
         const labelForCheckbox = document.querySelector(`label[for="${checkbox.id}"]`);
 
 
-       
+
         if (target.textContent === "Complete") {
             const checkbox = listItem.querySelector(".item-check");
             checkbox.checked = true;
             const labelElement = target.closest("label");
             const labelText = labelForCheckbox.textContent;
-            updateLocalStorageOrder() ; 
+            updateLocalStorageOrder();
         }
 
-       
+
         if (target.textContent === "Delete") {
             var userConfirmed = window.confirm("Are you sure you want to delete this task?");
 
-        if (userConfirmed) {
-            
-            const labelElement = listItem.querySelector(".item-label");
-            const labelValue = labelElement.textContent;
+            if (userConfirmed) {
 
-          
-            const listItemsec =listItem.parentNode;
-            const ullistItem = listItemsec.parentNode;
-            ullistItem.removeChild(listItemsec);
-            const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
-            const indexToRemove = itemOrder.indexOf(labelValue);
+                const labelElement = listItem.querySelector(".item-label");
+                const labelValue = labelElement.textContent;
+
+
+                const listItemsec = listItem.parentNode;
+                const ullistItem = listItemsec.parentNode;
+                ullistItem.removeChild(listItemsec);
+                const itemOrder = JSON.parse(localStorage.getItem("itemOrder")) || [];
+                const indexToRemove = itemOrder.indexOf(labelValue);
 
                 if (indexToRemove !== -1) {
-   
-                itemOrder.splice(indexToRemove, 1);//remove from itemorder and update localstorage
-                localStorage.setItem("itemOrder", JSON.stringify(itemOrder));
+
+                    itemOrder.splice(indexToRemove, 1);//remove from itemorder and update localstorage
+                    localStorage.setItem("itemOrder", JSON.stringify(itemOrder));
                 }
                 updateLocalStorageOrder();
+            }
+
+            const menu = target.closest('.item').querySelector('.menu');
+            menu.style.display = "none"; // hide the menu after pressing and handling
         }
 
-        const menu = target.closest('.item').querySelector('.menu');
-        menu.style.display = "none"; // hide the menu after pressing and handling
-    }
-    
     }
 });
 
 
 
 
-//change the menu visibility 
-const menuContainer = document.getElementById('item-list');
-
-menuContainer.addEventListener('click', function(event) {
-    if (event.target.classList.contains('fa-ellipsis-h')) {
 
 
-    const targetparent = event.target.parentNode;
-       
-        const menu = targetparent.nextElementSibling; 
-        menu.style.display = 'flex';
-        menu.style.flexDirection = 'column';
-        menu.style.placeContent = 'center';
+function showmenu() {
 
-    }});
- 
-function showmenu(){
-    
 }
 
 
@@ -287,9 +274,9 @@ function showmenu(){
 
 document.getElementById("item-list").addEventListener("change", function (event) {
     const target = event.target;
-   
+
     if (target.classList.contains("item-check")) {
-   
+
         const labelValue = target.id;
         localStorage.setItem(labelValue, target.checked.toString());
         updateLocalStorageOrder();
@@ -301,7 +288,7 @@ document.getElementById("item-list").addEventListener("change", function (event)
 
 document.querySelectorAll(".tab label").forEach((tabLabel) => {
     tabLabel.addEventListener("click", function () {
-       
+
         const filter = this.getAttribute("for").replace("tab-", "");
         filterItems(filter);
     });
@@ -319,45 +306,46 @@ let draggingEle;
 let placeholder;
 let isDraggingStarted = false;
 
-    
+
 let x = 0;
 let y = 0;
-   
-   
-    const swap = function (first, sec) {
-        const parentA = first.parentNode;
-        const siblingA = first.nextSibling === sec ? first : first.nextSibling;
 
-        
-        sec.parentNode.insertBefore(first, sec);
-        parentA.insertBefore(sec, siblingA);
-    };
 
-    
-    
+const swap = function (first, sec) {
+    const parentA = first.parentNode;
+    const siblingA = first.nextSibling === sec ? first : first.nextSibling;
 
-    list.addEventListener("mousedown", (e) => {
+
+    sec.parentNode.insertBefore(first, sec);
+    parentA.insertBefore(sec, siblingA);
+};
+
+
+
+
+list.addEventListener("mousedown", (e) => {
     console.log(e.target.tagName);
     if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
-        draggingEle= e.target.closest("li");
-        
+        draggingEle = e.target.closest("li");
 
-    
-    const rect = draggingEle.getBoundingClientRect();
-    x = e.pageX - rect.left;
-    y = e.pageY - rect.top;
 
-    
-    document.addEventListener('mousemove', mouseMoveHandler);
-    document.addEventListener('mouseup', mouseUpHandler);}
-    else{
-        e.preventDefault(); 
+
+        const rect = draggingEle.getBoundingClientRect();
+        x = e.pageX - rect.left;
+        y = e.pageY - rect.top;
+
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    }
+    else {
+        e.preventDefault();
     }
 });
 
 
 const isAbove = function (first, sec) {
-       
+
     const rectA = first.getBoundingClientRect();
     const rectB = sec.getBoundingClientRect();
 
@@ -368,33 +356,33 @@ const mouseMoveHandler = function (e) {
 
     if (!isDraggingStarted) {
         isDraggingStarted = true;
-       
-    
+
+
         placeholder = document.createElement('div');
         placeholder.classList.add('placeholder');
         draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
         placeholder.style.height = draggingRect.height + 'px';
     }
 
-   
+
     draggingEle.style.position = 'absolute';
     draggingEle.style.top = (e.pageY - y) + 'px';
     draggingEle.style.left = (e.pageX - x) + 'px';
 
-    
+
     const prev = draggingEle.previousElementSibling;
     const nextel = placeholder.nextElementSibling;
 
 
     if (prev && isAbove(draggingEle, prev)) {
-       
+
         swap(placeholder, draggingEle);
         swap(placeholder, prev);
         return;
     }
 
     if (nextel && isAbove(nextel, draggingEle)) {
-        
+
         swap(nextel, placeholder);
         swap(nextel, draggingEle);
     }
@@ -403,7 +391,7 @@ const mouseMoveHandler = function (e) {
 
 
 const mouseUpHandler = function () {
-    
+
     placeholder && placeholder.parentNode.removeChild(placeholder);
 
     draggingEle.style.removeProperty('top');
@@ -415,7 +403,7 @@ const mouseUpHandler = function () {
     draggingEle = null;
     isDraggingStarted = false;
 
-    
+
     document.removeEventListener('mousemove', mouseMoveHandler);
     document.removeEventListener('mouseup', mouseUpHandler);
     updateLocalStorageOrder();
@@ -424,18 +412,58 @@ const mouseUpHandler = function () {
 
 
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const menuContainer = event.target.closest('.menu-container');
     const allMenus = document.querySelectorAll('.menu');
+    
+
 
     if (!menuContainer) {
         allMenus.forEach(menu => {
             menu.style.display = 'none';
         });
-    } 
+    }
+    else{
+        if (event.target.classList.contains('fa-ellipsis-h')) {
+            const targetParent = event.target.parentNode;
+            allMenus.forEach(menu => {
+                menu.style.display = 'none';
+            });
+
+        const menu = targetParent.nextElementSibling;
+        menu.style.display = 'flex';
+        menu.style.flexDirection = 'column';
+        menu.style.placeContent = 'center';
+        menu.classList.toggle('open');
+        }
+    }
 });
-        
+
+// //change the menu visibility 
+
+// const menuContainer = document.getElementById('item-list');
+// const menuContainers = document.querySelector('.menu-container');
+// const allMenus = document.querySelectorAll('.menu');
+
        
+
+// menuContainer.addEventListener('click', function (event) {
+   
+    
+//         
+//         alert(allMenus.length);
+//         // Close other open menus
+//         allMenus.forEach(menu => {
+//             menu.style.display = 'none';
+//         });
+
+       
+//     }
+// });
+
+
+
+
 
 
 
