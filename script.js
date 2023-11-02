@@ -104,6 +104,7 @@ function buildliitem(task) {
     const storedValue = localStorage.getItem(labelValue);
     const mainlist = document.getElementsByClassName("fa-ul")[0];
     const li = document.createElement("li");
+    li.setAttribute("draggable", "true");
     li.classList.add("eachitem");
 
     li.innerHTML = `
@@ -252,12 +253,6 @@ document.getElementById("item-list").addEventListener("click", function (event) 
 
 
 
-
-function showmenu() {
-
-}
-
-
 //change the task value
 
 document.getElementById("item-list").addEventListener("change", function (event) {
@@ -284,119 +279,44 @@ document.querySelectorAll(".tab label").forEach((tabLabel) => {
 
 
 
-//handling drag and drop
-
+const sortableList = document.querySelector(".sortable-list");
+const sortitems = sortableList.querySelectorAll(".eachitem");
 const list = document.getElementById("item-list");
 
-
-
-let draggingEle;
-let placeholder;
-let isDraggingStarted = false;
-
-
-let x = 0;
-let y = 0;
-
-
-const swap = function (first, sec) {
-    const parentA = first.parentNode;
-    const siblingA = first.nextSibling === sec ? first : first.nextSibling;
-
-
-    sec.parentNode.insertBefore(first, sec);
-    parentA.insertBefore(sec, siblingA);
-};
-
-
-
-
-list.addEventListener("mousedown", (e) => {
+ list.addEventListener("mousedown", (e) => {
    
-    if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
+     if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
         draggingEle = e.target.closest("li");
-
-
-
-        const rect = draggingEle.getBoundingClientRect();
-        x = e.pageX - rect.left;
-        y = e.pageY - rect.top;
-
-
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
+        setTimeout(() => draggingEle.classList.add("dragging"), 0);
+        draggingEle.addEventListener("dragend", () => draggingEle.classList.remove("dragging"));
     }
-    else {
+    else{
         e.preventDefault();
     }
 });
 
 
-const isAbove = function (first, sec) {
-
-    const rectA = first.getBoundingClientRect();
-    const rectB = sec.getBoundingClientRect();
-
-    return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-};
-const mouseMoveHandler = function (e) {
-    const draggingRect = draggingEle.getBoundingClientRect();
-
-    if (!isDraggingStarted) {
-        isDraggingStarted = true;
-
-
-        placeholder = document.createElement('div');
-        placeholder.classList.add('placeholder');
-        draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
-        placeholder.style.height = draggingRect.height + 'px';
-    }
-
-
-    draggingEle.style.position = 'absolute';
-    draggingEle.style.top = (e.pageY - y) + 'px';
-    draggingEle.style.left = (e.pageX - x) + 'px';
-
-
-    const prev = draggingEle.previousElementSibling;
-    const nextel = placeholder.nextElementSibling;
-
-
-    if (prev && isAbove(draggingEle, prev)) {
-
-        swap(placeholder, draggingEle);
-        swap(placeholder, prev);
-        return;
-    }
-
-    if (nextel && isAbove(nextel, draggingEle)) {
-
-        swap(nextel, placeholder);
-        swap(nextel, draggingEle);
-    }
-};
-
-
-
-const mouseUpHandler = function () {
-
-    placeholder && placeholder.parentNode.removeChild(placeholder);
-
-    draggingEle.style.removeProperty('top');
-    draggingEle.style.removeProperty('left');
-    draggingEle.style.removeProperty('position');
-
-    x = null;
-    y = null;
-    draggingEle = null;
-    isDraggingStarted = false;
-
-
-    document.removeEventListener('mousemove', mouseMoveHandler);
-    document.removeEventListener('mouseup', mouseUpHandler);
+const finalsorting = (e) => {
+    e.preventDefault();
+    const draggingItem = document.querySelector(".dragging");
+    
+    let siblings = [...sortableList.querySelectorAll(".eachitem:not(.dragging)")];
+  
+    let nextSibling = siblings.find(sibling => {
+        return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+    });
+    
+    sortableList.insertBefore(draggingItem, nextSibling);
     updateLocalStorageOrder();
-    window.location.reload();
-};
+      
+}
+sortableList.addEventListener("dragover", finalsorting);
+sortableList.addEventListener("dragenter", e => e.preventDefault());
+
+
+
+
+
 
 
 
