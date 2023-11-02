@@ -61,7 +61,7 @@ function loadItemsFromLocalStorage() {
                 const storedValue = localStorage.getItem(task.value);
                 if (task.value !== null) {
                     buildliitem(task);
-                    
+
                 }
             });
         }
@@ -123,7 +123,7 @@ function buildliitem(task) {
             </div>
         </section>
     `;
-    
+
     const checkbox = li.querySelector(".item-check");
     checkbox.checked = task.check === true;
 
@@ -283,14 +283,14 @@ const sortableList = document.querySelector(".sortable-list");
 const sortitems = sortableList.querySelectorAll(".eachitem");
 const list = document.getElementById("item-list");
 
- list.addEventListener("mousedown", (e) => {
-   
-     if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
+list.addEventListener("mousedown", (e) => {
+
+    if (e.target.tagName === "I" && e.target.classList.contains("fa-grip-vertical")) {
         draggingEle = e.target.closest("li");
         setTimeout(() => draggingEle.classList.add("dragging"), 0);
         draggingEle.addEventListener("dragend", () => draggingEle.classList.remove("dragging"));
     }
-    else{
+    else {
         e.preventDefault();
     }
 });
@@ -299,16 +299,16 @@ const list = document.getElementById("item-list");
 const finalsorting = (e) => {
     e.preventDefault();
     const draggingItem = document.querySelector(".dragging");
-    
+
     let siblings = [...sortableList.querySelectorAll(".eachitem:not(.dragging)")];
-  
+
     let nextSibling = siblings.find(sibling => {
         return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
     });
-    
+
     sortableList.insertBefore(draggingItem, nextSibling);
     updateLocalStorageOrder();
-      
+
 }
 sortableList.addEventListener("dragover", finalsorting);
 sortableList.addEventListener("dragenter", e => e.preventDefault());
